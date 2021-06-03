@@ -1,19 +1,34 @@
 import {Component} from 'react';
+import {CardList} from './components/card-list/card-list.component';
 
-class App extends Component{
-  constructor() {
-    super();
-  }
 
-  render() {
-    return (
-        <ErrorBoundary>
-        <div>
-          Some text
-        </div>
-        </ErrorBoundary>
-    );
-  }
+class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            pokemons: []
+        };
+    }
+
+    componentDidMount() {
+        fetch('https://pokeapi.co/api/v2/pokemon/?limit=10')
+            .then(response => response.json())
+            .then(data => {
+                let results = data.results;
+                let promisesArray = results.map(result => {
+                    return fetch(result.url).then(response => response.json());
+                })
+                return Promise.all(promisesArray);
+            }).then((data) => this.setState({ pokemons: data }, () => console.log('Main Pokemon State: ', this.state.pokemons)));
+    }
+
+    render() {
+        return (
+            <ErrorBoundary>
+                <CardList pokemons={this.state.pokemons}/>
+            </ErrorBoundary>
+        );
+    }
 }
 
 class ErrorBoundary extends Component {
