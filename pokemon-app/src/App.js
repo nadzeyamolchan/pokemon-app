@@ -1,6 +1,7 @@
 import {Component} from 'react';
 /*import {CardList} from './components/card-list/card-list.component';*/
-import {CustomPaginationActionsTable} from './table/table.component'
+import {CustomPaginationActionsTable} from './table/table.component';
+import axios from "axios";
 
 class App extends Component {
     constructor() {
@@ -11,15 +12,14 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('https://pokeapi.co/api/v2/pokemon/?limit=10')
-            .then(response => response.json())
-            .then(data => {
-                let results = data.results;
-                let promisesArray = results.map(result => {
-                    return fetch(result.url).then(response => response.json());
-                })
-                return Promise.all(promisesArray);
-            }).then((data) => this.setState({ pokemons: data }, () => console.log('Main Pokemon State: ', this.state.pokemons)));
+        axios.get('https://pokeapi.co/api/v2/pokemon/?limit=10',
+            {
+                params: {
+                    offset: 20,
+                    limit: 20
+                }
+            })
+            .then(response => this.setState({pokemons: response.data.results}));
     }
 
     render() {
