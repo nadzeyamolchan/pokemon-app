@@ -1,6 +1,6 @@
 import {Component} from 'react';
-import {CardList} from './components/card-list/card-list.component';
-
+/*import {CardList} from './components/card-list/card-list.component';*/
+import {CustomPaginationActionsTable} from './table/table.component'
 
 class App extends Component {
     constructor() {
@@ -25,11 +25,13 @@ class App extends Component {
     render() {
         return (
             <ErrorBoundary>
-                <CardList pokemons={this.state.pokemons}/>
+                <CustomPaginationActionsTable pokemons={this.state.pokemons}/>
             </ErrorBoundary>
         );
     }
 }
+
+/*<CardList pokemons={this.state.pokemons}/>*/
 
 class ErrorBoundary extends Component {
     constructor(props) {
