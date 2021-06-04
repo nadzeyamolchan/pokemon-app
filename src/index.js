@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import PokemonApp from './PokemonApp';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <PokemonApp />
   </React.StrictMode>,
   document.getElementById('root')
 );

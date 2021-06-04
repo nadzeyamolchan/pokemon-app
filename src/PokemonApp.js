@@ -1,9 +1,9 @@
 import {Component} from 'react';
 /*import {CardList} from './components/card-list/card-list.component';*/
-import {CustomPaginationActionsTable} from './table/table.component';
+import {CustomPaginationActionsTable} from './components/table/table.component';
 import axios from "axios";
 
-class App extends Component {
+class PokemonApp extends Component {
     constructor() {
         super();
         this.state = {
@@ -66,4 +66,4 @@ class ErrorBoundary extends Component {
         return this.props.children;
     }
 }
-export default App;
+export default PokemonApp;
