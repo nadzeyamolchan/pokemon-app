@@ -1,7 +1,5 @@
 import {Component} from 'react';
-/*import {CardList} from './components/card-list/card-list.component';*/
-import {CustomPaginationActionsTable} from './components/table/table.component';
-import axios from "axios";
+import {CustomPaginationActionsTable} from './components/table/PokemonsTable.component';
 
 class PokemonApp extends Component {
     constructor() {
@@ -9,17 +7,6 @@ class PokemonApp extends Component {
         this.state = {
             pokemons: []
         };
-    }
-
-    componentDidMount() {
-        axios.get('https://pokeapi.co/api/v2/pokemon/?limit=10',
-            {
-                params: {
-                    offset: 20,
-                    limit: 20
-                }
-            })
-            .then(response => this.setState({pokemons: response.data.results}));
     }
 
     render() {
@@ -30,8 +17,6 @@ class PokemonApp extends Component {
         );
     }
 }
-
-/*<CardList pokemons={this.state.pokemons}/>*/
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -66,4 +51,5 @@ class ErrorBoundary extends Component {
         return this.props.children;
     }
 }
+
 export default PokemonApp;
