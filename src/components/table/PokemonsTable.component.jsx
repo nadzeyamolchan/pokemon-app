@@ -67,7 +67,7 @@ export class CustomPaginationActionsTable extends React.Component {
                         {this.state.pokemons.map((pokemon) => (
                             <TableRow key={pokemon.id}>
                                 <TableCell style={{width: 160}} align="left">
-                                    <img src={pokemon.sprites.other['official-artwork'].front_default}
+                                    <img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemon"
                                          style={{width: 100, height: 100}}/>
                                 </TableCell>
                                 <TableCell style={{width: 160}} align="left">
