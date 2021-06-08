@@ -1,16 +1,8 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import TableHead from '@material-ui/core/TableHead';
+import { Table,TableBody,TableCell,TableContainer,TableFooter,TablePagination,TableRow,Paper,TableHead } from '@material-ui/core';
 import './table.component.style.css';
 import TablePaginationActions from "./TablePaginationActions";
-import {pokemonService} from './../../service/PokemonService';
+import {pokemonService} from '../../service/PokemonService';
 
 export class CustomPaginationActionsTable extends React.Component {
     constructor() {
