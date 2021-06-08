@@ -7,6 +7,7 @@ import {LastPage,FirstPage,KeyboardArrowRight,KeyboardArrowLeft} from '@material
 export default function TablePaginationActions(props) {
     const theme = useTheme();
     const {count, page, rowsPerPage, onChangePage} = props;
+    const isDirectionRightToLeft = (theme.direction === 'rtl');
 
     const handleFirstPageButtonClick = (event) => {
         onChangePage(event, 0);
@@ -31,24 +32,24 @@ export default function TablePaginationActions(props) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === 'rtl' ? <LastPage/> : <FirstPage/>}
+                {isDirectionRightToLeft ? <LastPage/> : <FirstPage/>}
             </IconButton>
             <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
+                {isDirectionRightToLeft ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
+                {isDirectionRightToLeft ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === 'rtl' ? <FirstPage/> : <LastPage/>}
+                {isDirectionRightToLeft ? <FirstPage/> : <LastPage/>}
             </IconButton>
         </div>
     );

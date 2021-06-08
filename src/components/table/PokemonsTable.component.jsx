@@ -4,6 +4,14 @@ import './table.component.style.css';
 import TablePaginationActions from "./TablePaginationActions";
 import {pokemonService} from '../../service/PokemonService';
 
+const headerCells = [
+    'Sprite',
+    'Name',
+    'Weight',
+    'Height',
+    'Base experience'
+];
+
 export class PokemonsTable extends React.Component {
     constructor() {
         super();
@@ -11,14 +19,7 @@ export class PokemonsTable extends React.Component {
             page: 0,
             rowsPerPage: 5,
             totalPokemons: 0,
-            pokemons: [],
-            headerCells: [
-                'Sprite',
-                'Name',
-                'Weight',
-                'Height',
-                'Base experience'
-            ]
+            pokemons: []
         };
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
@@ -54,8 +55,8 @@ export class PokemonsTable extends React.Component {
                 <Table className="table" aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            {this.state.headerCells.map(cell => (
-                                <TableCell key={this.state.headerCells.indexOf(cell)}>{cell}</TableCell>
+                            {headerCells.map(cell => (
+                                <TableCell key={headerCells.indexOf(cell)}>{cell}</TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
