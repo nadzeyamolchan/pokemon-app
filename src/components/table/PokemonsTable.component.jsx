@@ -4,14 +4,21 @@ import './table.component.style.css';
 import TablePaginationActions from "./TablePaginationActions";
 import {pokemonService} from '../../service/PokemonService';
 
-export class CustomPaginationActionsTable extends React.Component {
+export class PokemonsTable extends React.Component {
     constructor() {
         super();
         this.state = {
             page: 0,
             rowsPerPage: 5,
             totalPokemons: 0,
-            pokemons: []
+            pokemons: [],
+            headerCells: [
+                'Sprite',
+                'Name',
+                'Weight',
+                'Height',
+                'Base experience'
+            ]
         };
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
@@ -33,8 +40,7 @@ export class CustomPaginationActionsTable extends React.Component {
     };
 
     handleChangeRowsPerPage = (event) => {
-        this.setState({rowsPerPage: parseInt(event.target.value, 10)});
-        this.setState({page: 0});
+        this.setState({rowsPerPage: parseInt(event.target.value, 10), page: 0});
     };
 
     uploadPokemons = () => {
@@ -48,11 +54,9 @@ export class CustomPaginationActionsTable extends React.Component {
                 <Table className="table" aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Sprite</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Weight</TableCell>
-                            <TableCell>Height</TableCell>
-                            <TableCell>Base experience</TableCell>
+                            {this.state.headerCells.map(cell => (
+                                <TableCell key={this.state.headerCells.indexOf(cell)}>{cell}</TableCell>
+                            ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
