@@ -1,22 +1,12 @@
-import {Component} from 'react';
-import {CustomPaginationActionsTable} from './components/table/PokemonsTable.component';
+import {PokemonsTable} from './components/table/PokemonsTable.component';
 import {ErrorBoundary} from "./error/ErrorBoundary";
 
-class PokemonApp extends Component {
-    constructor() {
-        super();
-        this.state = {
-            pokemons: []
-        };
-    }
-
-    render() {
-        return (
-            <ErrorBoundary>
-                <CustomPaginationActionsTable pokemons={this.state.pokemons}/>
-            </ErrorBoundary>
-        );
-    }
+function PokemonApp() {
+    return (
+        <ErrorBoundary>
+            <PokemonsTable/>
+        </ErrorBoundary>
+    );
 }
 
 export default PokemonApp;
