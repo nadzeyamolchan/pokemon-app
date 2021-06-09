@@ -95,6 +95,7 @@ class PokemonsTable extends React.Component {
                     <TableFooter className={classes.tableFooter}>
                         <TableRow >
                             <TablePagination
+                                className={classes.paginationRow}
                                 rowsPerPageOptions={[1, 5, 10, 25, 50]}
                                 colSpan={5}
                                 count={this.state.totalPokemons}
