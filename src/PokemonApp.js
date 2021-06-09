@@ -1,4 +1,4 @@
-import {PokemonsTable} from './components/table/PokemonsTable.component';
+import PokemonsTable from "./components/table/PokemonsTable.component";
 import {ErrorBoundary} from "./error/ErrorBoundary";
 
 function PokemonApp() {

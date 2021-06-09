@@ -1,8 +1,18 @@
 import React from 'react';
-import { Table,TableBody,TableCell,TableContainer,TableFooter,TablePagination,TableRow,Paper,TableHead } from '@material-ui/core';
-import './table.component.style.css';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableFooter,
+    TablePagination,
+    TableRow,
+    TableHead,
+    withStyles
+} from '@material-ui/core';
 import TablePaginationActions from "./TablePaginationActions";
 import {pokemonService} from '../../service/PokemonService';
+import {useStyles} from "./Table.component.style";
 
 const headerCells = [
     'Sprite',
@@ -12,7 +22,7 @@ const headerCells = [
     'Base experience'
 ];
 
-export class PokemonsTable extends React.Component {
+class PokemonsTable extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -50,40 +60,40 @@ export class PokemonsTable extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
         return (
-            <TableContainer component={Paper}>
-                <Table className="table" aria-label="custom pagination table">
+            <TableContainer className={classes.tableContainer}>
+                <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
                             {headerCells.map(cell => (
-                                <TableCell key={headerCells.indexOf(cell)}>{cell}</TableCell>
+                                <TableCell key={headerCells.indexOf(cell)} align="center">{cell}</TableCell>
                             ))}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.pokemons.map((pokemon) => (
                             <TableRow key={pokemon.id}>
-                                <TableCell style={{width: 160}} align="left">
-                                    <img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemon"
-                                         style={{width: 100, height: 100}}/>
+                                <TableCell className={classes.cell}>
+                                    <img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemon"/>
                                 </TableCell>
-                                <TableCell style={{width: 160}} align="left">
+                                <TableCell className={classes.cell}>
                                     {pokemon.name}
                                 </TableCell>
-                                <TableCell style={{width: 160}} align="left">
+                                <TableCell className={classes.cell}>
                                     {pokemon.weight}
                                 </TableCell>
-                                <TableCell style={{width: 160}} align="left">
+                                <TableCell className={classes.cell}>
                                     {pokemon.height}
                                 </TableCell>
-                                <TableCell style={{width: 160}} align="left">
+                                <TableCell className={classes.cell}>
                                     {pokemon.base_experience}
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
-                    <TableFooter>
-                        <TableRow>
+                    <TableFooter className={classes.tableFooter}>
+                        <TableRow >
                             <TablePagination
                                 rowsPerPageOptions={[1, 5, 10, 25, 50]}
                                 colSpan={5}
@@ -101,3 +111,5 @@ export class PokemonsTable extends React.Component {
         );
     }
 }
+
+export default withStyles(useStyles, {withTheme: true})(PokemonsTable);
