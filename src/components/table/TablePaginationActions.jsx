@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useTheme} from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import {LastPage,FirstPage,KeyboardArrowRight,KeyboardArrowLeft} from '@material-ui/icons';
+import './table.style.css';
 
 export default function TablePaginationActions(props) {
     const theme = useTheme();
@@ -26,7 +27,7 @@ export default function TablePaginationActions(props) {
     };
 
     return (
-        <div className="root">
+        <div className="pagination-buttons">
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}

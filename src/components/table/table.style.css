@@ -1,0 +1,13 @@
+.pagination-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.MuiTableCell-head {
+    font-weight: 700;
+}
+
+figcaption {
+    font-size: 0.875rem;
+}
