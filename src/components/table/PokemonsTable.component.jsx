@@ -8,7 +8,7 @@ import {
     TablePagination,
     TableRow,
     TableHead,
-    withStyles, StylesProvider
+    withStyles, StylesProvider, Container
 } from '@material-ui/core';
 import TablePaginationActions from "./TablePaginationActions";
 import {pokemonService} from '../../service/PokemonService';
@@ -55,7 +55,8 @@ class PokemonsTable extends React.Component {
         console.log(this.state.pokemons);
         return (
             <StylesProvider injectFirst>
-                <TableContainer className={classes.tableContainer}>
+                <Container maxWidth="lg">
+                <TableContainer className={classes.tableContainer} >
                     <Table className={classes.table} aria-label="custom pagination table">
                         <TableHead>
                             <TableRow>
@@ -111,6 +112,7 @@ class PokemonsTable extends React.Component {
                         </TableFooter>
                     </Table>
                 </TableContainer>
+                    </Container>
             </StylesProvider>
         );
     }

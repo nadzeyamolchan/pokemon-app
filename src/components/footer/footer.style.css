@@ -18,6 +18,7 @@ ul > li:hover {
 }
 
 .footer-wrapper {
+    height: 20vh;
     margin-top: 3rem;
 
     background-color: #dcd7c9;
