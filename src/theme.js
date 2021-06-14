@@ -10,6 +10,9 @@ export const theme = createMuiTheme({
         },
         warning: {
             main: '#ab6a84'
+        },
+        background: {
+            default: '#dcd7c9'
         }
     },
     typography : {
@@ -27,7 +30,6 @@ export const theme = createMuiTheme({
             fontSize: "1.75rem",
             fontWeight: 400
         }
-
-    }
+    },
+    
 });
-

@@ -1,9 +1,7 @@
-const HEADER_CELLS = [
+export const HEADER_CELLS = [
     '',
     'Name',
     'Type',
     'Weight',
     'Abilities'
 ];
-
-export default HEADER_CELLS;

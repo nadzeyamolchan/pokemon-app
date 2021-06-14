@@ -1,31 +1,26 @@
 import React from "react"
 import {useParams} from 'react-router-dom';
 import Skeleton from '@material-ui/lab/Skeleton';
-import {StylesProvider} from '@material-ui/core';
 import {pokemonService} from "../../service/PokemonService";
-import PokemonCard from "../../components/pokemon-card/pokemon-card.component";
-import './pokemon-card-page.style.css';
+import PokemonCard from "../../components/PokemonCard/PokemonCard.component";
+import pokemonCardPageStyle from "./PokemonCardPage.style";
 
-
-const PokemonCardPage = () => {
+export default function PokemonCardPage() {
     const {name} = useParams()
     const [pokemon, setPokemon] = React.useState(null)
     React.useEffect(() => pokemonService.getPokemonByName(name).then(res => setPokemon(res.data)), [name]);
+    const classes = pokemonCardPageStyle();
 
     return pokemon ? (
         <div>
             <PokemonCard name={pokemon.name}
+                         id={pokemon.id}
                          height={pokemon.height}
                          weight={pokemon.weight}
                          image={pokemon.sprites.other["official-artwork"].front_default}
             />
         </div>
     ) : (
-        <StylesProvider injectFirst>
-            <Skeleton variant="rect" animation="pulse"/>
-        </StylesProvider>
+            <Skeleton className={classes.pokemonCardSkeleton} variant="rect" animation="pulse"/>
     )
 }
-
-
-export default PokemonCardPage;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
     Table,
     TableBody,
@@ -8,16 +9,18 @@ import {
     TablePagination,
     TableRow,
     TableHead,
-    withStyles, StylesProvider, Container
+    withStyles, Container
 } from '@material-ui/core';
-import {Link} from "react-router-dom";
-import TablePaginationActions from "./TablePaginationActions";
-import {pokemonService} from '../../service/PokemonService';
-import {useStyles} from "./Table.component.style";
-import HEADER_CELLS from "../../constants/constants";
-import './table.style.css';
 
-class PokemonsTable extends React.Component {
+import { Link } from "react-router-dom";
+
+import TablePaginationActionsComponent from "../TablePaginationActions/TablePaginationActions.component";
+import { pokemonService } from "../../service/PokemonService";
+import {HEADER_CELLS} from "../../constants";
+
+import pokemonTableStyles from "./PokemonTable.style";
+
+class PokemonTableComponent extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -53,9 +56,7 @@ class PokemonsTable extends React.Component {
 
     render() {
         const {classes} = this.props;
-        console.log(this.state.pokemons);
         return (
-            <StylesProvider injectFirst>
                 <Container maxWidth="lg">
                     <TableContainer className={classes.tableContainer}>
                         <Table className={classes.table} aria-label="custom pagination table">
@@ -114,16 +115,15 @@ class PokemonsTable extends React.Component {
                                         page={this.state.page}
                                         onChangePage={this.handleChangePage}
                                         onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
+                                        ActionsComponent={TablePaginationActionsComponent}
                                     />
                                 </TableRow>
                             </TableFooter>
                         </Table>
                     </TableContainer>
                 </Container>
-            </StylesProvider>
         );
     }
 }
 
-export default withStyles(useStyles)(PokemonsTable);
+export default withStyles(pokemonTableStyles)(PokemonTableComponent);

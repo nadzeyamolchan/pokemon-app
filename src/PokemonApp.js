@@ -1,14 +1,13 @@
-
 import {ErrorBoundary} from "./error/ErrorBoundary";
 import {theme} from "./theme";
 import { ThemeProvider } from "@material-ui/core";
 import {Switch, Route} from 'react-router-dom';
 
-import Header from "./components/header/header.component";
-import Footer from "./components/footer/footer.component";
-import PokemonTablePage from "./pages/pokemon-table-page/pokemon-table-page.component";
-import Homepage from "./pages/homepage/homepage";
-import PokemonCardPage from "./pages/pokemon-card-page/pokemon-card-page"
+import Header from "./components/Header/Header.component";
+import Footer from "./components/Footer/Footer.component";
+import PokemonTablePage from "./pages/PokemonTablePage/PokemonTablePage";
+import Homepage from "./pages/Homepage/Homepage";
+import PokemonCardPage from "./pages/PokemonCardPage/PokemonCardPage"
 
 function PokemonApp() {
     return (

@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {useTheme} from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import {LastPage,FirstPage,KeyboardArrowRight,KeyboardArrowLeft} from '@material-ui/icons';
-import './table.style.css';
+import tablePaginationActionsStyle from "./TablePaginationActions.style";
 
-export default function TablePaginationActions(props) {
+export default function TablePaginationActionsComponent(props) {
+    const classes = tablePaginationActionsStyle();
     const theme = useTheme();
     const {count, page, rowsPerPage, onChangePage} = props;
     const isDirectionRightToLeft = (theme.direction === 'rtl');
@@ -27,7 +28,7 @@ export default function TablePaginationActions(props) {
     };
 
     return (
-        <div className="pagination-buttons">
+        <div className={classes.paginationButtonsWrapper}>
             <IconButton
                 onClick={handleFirstPageButtonClick}
                 disabled={page === 0}
@@ -56,7 +57,7 @@ export default function TablePaginationActions(props) {
     );
 }
 
-TablePaginationActions.propTypes = {
+TablePaginationActionsComponent.propTypes = {
     count: PropTypes.number.isRequired,
     onChangePage: PropTypes.func.isRequired,
     page: PropTypes.number.isRequired,
