@@ -10,8 +10,7 @@ import './pokemon-card-page.style.css';
 const PokemonCardPage = () => {
     const {name} = useParams()
     const [pokemon, setPokemon] = React.useState(null)
-    React.useEffect(() => pokemonService.getPokemonByName(name).then(res => setTimeout(() => setPokemon(res.data), 3000)), [name]);
-    console.log('res', pokemon);
+    React.useEffect(() => pokemonService.getPokemonByName(name).then(res => setPokemon(res.data)), [name]);
 
     return pokemon ? (
         <div>
