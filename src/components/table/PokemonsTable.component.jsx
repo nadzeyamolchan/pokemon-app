@@ -10,6 +10,7 @@ import {
     TableHead,
     withStyles, StylesProvider, Container
 } from '@material-ui/core';
+import {Link} from "react-router-dom";
 import TablePaginationActions from "./TablePaginationActions";
 import {pokemonService} from '../../service/PokemonService';
 import {useStyles} from "./Table.component.style";
@@ -56,63 +57,70 @@ class PokemonsTable extends React.Component {
         return (
             <StylesProvider injectFirst>
                 <Container maxWidth="lg">
-                <TableContainer className={classes.tableContainer} >
-                    <Table className={classes.table} aria-label="custom pagination table">
-                        <TableHead>
-                            <TableRow>
-                                {HEADER_CELLS.map(cell => (
-                                    <TableCell key={HEADER_CELLS.indexOf(cell)} align="center">{cell}</TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.pokemons.map((pokemon) => (
-                                <TableRow key={`${pokemon.id}-${pokemon.name}`}>
-                                    <TableCell className={classes.cell}>
-                                        <figure>
-                                        <img src={pokemon.sprites.other['official-artwork'].front_default}
-                                             alt="pokemon"/>
-                                            <figcaption> {`# ${pokemon.id}`}</figcaption>
-                                        </figure>
-                                    </TableCell>
-                                    <TableCell className={classes.cell}>
-                                        {pokemon.name}
-                                    </TableCell>
-                                    <TableCell className={classes.cell}>
-                                        {pokemon.types.map((pokemonType) => (
-                                            <div key={`${pokemon.id}-${pokemonType.type.name}`}>{pokemonType.type.name}</div>
-                                        ))}
-                                    </TableCell>
-                                    <TableCell className={classes.cell}>
-                                        {pokemon.weight}
-                                    </TableCell>
-                                    <TableCell className={classes.cell}>
-                                        {pokemon.abilities.map((pokemonType) => (
-                                            <div key={`${pokemon.id}-${pokemonType.ability.name}`}>{pokemonType.ability.name}</div>
-                                        ))}
-                                    </TableCell>
+                    <TableContainer className={classes.tableContainer}>
+                        <Table className={classes.table} aria-label="custom pagination table">
+                            <TableHead>
+                                <TableRow>
+                                    {HEADER_CELLS.map(cell => (
+                                        <TableCell key={HEADER_CELLS.indexOf(cell)}
+                                                   className={classes.headerCell}>{cell}</TableCell>
+                                    ))}
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                        <TableFooter className={classes.tableFooter}>
-                            <TableRow>
-                                <TablePagination
-                                    className={classes.paginationRow}
-                                    rowsPerPageOptions={[1, 5, 10, 25, 50]}
-                                    colSpan={5}
-                                    count={this.state.totalPokemons}
-                                    labelRowsPerPage='Pokemon per page'
-                                    rowsPerPage={this.state.rowsPerPage}
-                                    page={this.state.page}
-                                    onChangePage={this.handleChangePage}
-                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                    ActionsComponent={TablePaginationActions}
-                                />
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
-                </TableContainer>
-                    </Container>
+                            </TableHead>
+                            <TableBody>
+                                {this.state.pokemons.map((pokemon) => (
+                                    <TableRow key={`${pokemon.id}-${pokemon.name}`}>
+
+                                        <TableCell className={classes.cell}>
+                                            <Link to={'/pokemon/' + pokemon.name}>
+                                                <figure>
+                                                    <img src={pokemon.sprites.other['official-artwork'].front_default}
+                                                         alt="pokemon"/>
+                                                    <figcaption> {`# ${pokemon.id}`}</figcaption>
+                                                </figure>
+                                            </Link>
+                                        </TableCell>
+
+                                        <TableCell className={classes.cell}>
+                                            {pokemon.name}
+                                        </TableCell>
+                                        <TableCell className={classes.cell}>
+                                            {pokemon.types.map((pokemonType) => (
+                                                <div
+                                                    key={`${pokemon.id}-${pokemonType.type.name}`}>{pokemonType.type.name}</div>
+                                            ))}
+                                        </TableCell>
+                                        <TableCell className={classes.cell}>
+                                            {pokemon.weight}
+                                        </TableCell>
+                                        <TableCell className={classes.cell}>
+                                            {pokemon.abilities.map((pokemonType) => (
+                                                <div
+                                                    key={`${pokemon.id}-${pokemonType.ability.name}`}>{pokemonType.ability.name}</div>
+                                            ))}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                            <TableFooter className={classes.tableFooter}>
+                                <TableRow>
+                                    <TablePagination
+                                        className={classes.paginationRow}
+                                        rowsPerPageOptions={[1, 5, 10, 25, 50]}
+                                        colSpan={5}
+                                        count={this.state.totalPokemons}
+                                        labelRowsPerPage='Pokemon per page'
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </TableContainer>
+                </Container>
             </StylesProvider>
         );
     }

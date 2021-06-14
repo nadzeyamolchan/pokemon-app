@@ -8,6 +8,7 @@ import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";
 import PokemonTablePage from "./pages/pokemon-table-page/pokemon-table-page.component";
 import Homepage from "./pages/homepage/homepage";
+import PokemonCardPage from "./pages/pokemon-card-page/pokemon-card-page"
 
 function PokemonApp() {
     return (
@@ -16,7 +17,8 @@ function PokemonApp() {
                 <Header/>
                 <Switch>
                     <Route exact path='/' component={Homepage}/>
-                    <Route path='/pokemon' component={PokemonTablePage}/>
+                    <Route exact path='/pokemon' component={PokemonTablePage}/>
+                    <Route path='/pokemon/:name' component={PokemonCardPage}/>
                 </Switch>
                 <Footer/>
             </ThemeProvider>

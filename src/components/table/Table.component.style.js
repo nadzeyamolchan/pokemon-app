@@ -8,6 +8,9 @@ export const useStyles = () => ({
             height: '100%'
         }
     },
+    headerCell: {
+        textAlign: 'center'
+    },
     table: {
         margin: '0 auto'
     },
