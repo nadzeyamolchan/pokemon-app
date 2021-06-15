@@ -72,7 +72,7 @@ class PokemonTableComponent extends React.Component {
                                 {this.state.pokemons.map((pokemon) => (
                                     <TableRow key={`${pokemon.id}-${pokemon.name}`}>
                                         <TableCell className={classes.cell}>
-                                            <Link to={'/pokemon/' + pokemon.name}>
+                                            <Link to={'/pokemon/' + pokemon.id}>
                                                 <figure>
                                                     <img src={pokemon.sprites.other['official-artwork'].front_default}
                                                          alt="pokemon"/>

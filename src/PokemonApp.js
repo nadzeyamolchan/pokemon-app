@@ -17,7 +17,7 @@ function PokemonApp() {
                 <Switch>
                     <Route exact path='/' component={Homepage}/>
                     <Route exact path='/pokemon' component={PokemonTablePage}/>
-                    <Route path='/pokemon/:name' component={PokemonCardPage}/>
+                    <Route path='/pokemon/:id' component={PokemonCardPage}/>
                 </Switch>
                 <Footer/>
             </ThemeProvider>

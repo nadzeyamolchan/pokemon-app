@@ -26,6 +26,10 @@ class PokemonService {
     getPokemonByName = (name) => {
         return axios.get(`/pokemon/${name}`)
     }
+
+    getPokemonById = (id) => {
+        return axios.get(`/pokemon/${id}`)
+    }
 }
 
 export const pokemonService = new PokemonService();

@@ -6,9 +6,9 @@ import PokemonCard from "../../components/PokemonCard/PokemonCard.component";
 import pokemonCardPageStyle from "./PokemonCardPage.style";
 
 export default function PokemonCardPage() {
-    const {name} = useParams()
-    const [pokemon, setPokemon] = React.useState(null)
-    React.useEffect(() => pokemonService.getPokemonByName(name).then(res => setPokemon(res.data)), [name]);
+    const {id} = useParams();
+    const [pokemon, setPokemon] = React.useState(null);
+    React.useEffect(() => pokemonService.getPokemonById(id).then(res => setPokemon(res.data)), [id]);
     const classes = pokemonCardPageStyle();
 
     return pokemon ? (
