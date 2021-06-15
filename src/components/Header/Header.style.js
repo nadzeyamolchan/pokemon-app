@@ -1,35 +1,43 @@
 import { makeStyles } from "@material-ui/core";
-import { theme } from "../../theme";
 
-const headerStyle = makeStyles({
-    headerWrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '20vh',
-        backgroundColor: theme.palette.background.default,
-        borderRadius: theme.shape.borderRadius
-    },
+const headerStyle = makeStyles((theme) =>({
+        headerWrapper: () => ({
+            height: theme.spacing(20),
 
-    navigationPanel: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
 
-    navigationLink: {
-        color: theme.palette.grey,
-        textDecoration: 'none',
-        fontFamily: theme.typography.body2.fontFamily,
-        padding: '1rem 1.5rem',
-        '&:hover' : {
-            transform: 'scale(1.02)'
-        },
-        '&:active' : {
-            color: theme.palette.primary.main
-        }
-    }
-})
+            margin: theme.spacing(0, 'auto', 10),
+            padding: theme.spacing(0, 5),
+
+            backgroundColor: theme.palette.background.default
+        }),
+
+        navigationLink: () => ({
+            padding: '1rem',
+
+            color: theme.palette.grey,
+            textDecoration: 'none',
+            fontFamily: theme.typography.body2.fontFamily,
+
+            '&:hover': {
+                transform: 'scale(1.02)'
+            },
+
+            '&:active': {
+                color: theme.palette.primary.main
+            },
+
+            '&:first-child': {
+                padding: '1rem 1rem 1rem 0'
+            },
+
+            '&:last-child': {
+                padding: '1rem 0 1rem 1rem'
+            }
+        })
+    })
+)
 
 export default headerStyle;

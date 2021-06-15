@@ -58,20 +58,19 @@ class PokemonTableComponent extends React.Component {
         const {classes} = this.props;
         return (
                 <Container maxWidth="lg">
-                    <TableContainer className={classes.tableContainer}>
+                    <TableContainer>
                         <Table className={classes.table} aria-label="custom pagination table">
                             <TableHead>
                                 <TableRow>
                                     {HEADER_CELLS.map(cell => (
                                         <TableCell key={HEADER_CELLS.indexOf(cell)}
-                                                   className={classes.headerCell}>{cell}</TableCell>
+                                                   className={classes.cell}>{cell}</TableCell>
                                     ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {this.state.pokemons.map((pokemon) => (
                                     <TableRow key={`${pokemon.id}-${pokemon.name}`}>
-
                                         <TableCell className={classes.cell}>
                                             <Link to={'/pokemon/' + pokemon.name}>
                                                 <figure>
@@ -126,4 +125,4 @@ class PokemonTableComponent extends React.Component {
     }
 }
 
-export default withStyles(pokemonTableStyles)(PokemonTableComponent);
+export default withStyles(pokemonTableStyles, {withTheme: true})(PokemonTableComponent);

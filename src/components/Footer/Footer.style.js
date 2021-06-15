@@ -1,16 +1,19 @@
 import {makeStyles} from "@material-ui/core";
-import {theme} from "../../theme";
 
-const footerStyle = makeStyles({
-    footerWrapper: {
+const footerStyle = makeStyles((theme) =>({
+    footerWrapper: () => ({
+        height: theme.spacing(10),
+
         display: "flex",
-        flexDirection: "row",
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '20vh',
-        backgroundColor: theme.palette.background.default,
-        borderRadius: theme.shape.borderRadius,
-    }
-});
+        justifyContent: "space-between",
+        alignItems: "center",
+
+        margin: theme.spacing(5, 0, 'auto'),
+        padding: theme.spacing(0, 5),
+
+        backgroundColor: theme.palette.background.default
+    })
+})
+)
 
 export default footerStyle;

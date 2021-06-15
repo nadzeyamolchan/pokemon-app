@@ -1,26 +1,20 @@
 
-const pokemonTableStyles = () => ({
-    cell: {
-        textAlign: 'center',
+const pokemonTableStyles = (theme) => ({
+    cell: () => ({
         width: '20%',
-        height: '10rem',
+        padding: '0',
+
+        textAlign: 'center',
+
         '& img': {
             width: '100%',
             height: '100%'
         }
-    },
+    }),
 
-    headerCell: {
-        textAlign: 'center'
-    },
-
-    table: {
-        margin: '0 auto'
-    },
-
-    paginationRow: {
+    paginationRow: () => ({
         borderBottom: 'none'
-    }
+    })
 });
 
 export default pokemonTableStyles;
