@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import TablePaginationActionsComponent from "../TablePaginationActions/TablePaginationActions.component";
 import { pokemonService } from "../../service/PokemonService";
 import {HEADER_CELLS} from "../../constants";
+import {POKEMON_SPRITE} from "../../constants";
 
 import pokemonTableStyles from "./PokemonTable.style";
 
@@ -74,7 +75,7 @@ class PokemonTableComponent extends React.Component {
                                         <TableCell className={classes.cell}>
                                             <Link to={'/pokemon/' + pokemon.id}>
                                                 <figure>
-                                                    <img src={pokemon.sprites.other['official-artwork'].front_default}
+                                                    <img src={POKEMON_SPRITE(pokemon)}
                                                          alt="pokemon"/>
                                                     <figcaption> {`# ${pokemon.id}`}</figcaption>
                                                 </figure>

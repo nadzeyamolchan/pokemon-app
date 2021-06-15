@@ -1,3 +1,5 @@
+import objectPath from 'object-path';
+
 export const HEADER_CELLS = [
     '',
     'Name',
@@ -5,3 +7,7 @@ export const HEADER_CELLS = [
     'Weight',
     'Abilities'
 ];
+
+export const POKEMON_SPRITE = (pokemon) => {
+    return objectPath.get(pokemon, ['sprites','other','official-artwork','front_default'])
+}
