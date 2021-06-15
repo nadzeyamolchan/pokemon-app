@@ -1,7 +1,7 @@
+import {ThemeProvider} from "@material-ui/core";
+import {Switch, Route} from 'react-router-dom';
 import {ErrorBoundary} from "./error/ErrorBoundary";
 import {theme} from "./theme";
-import { ThemeProvider } from "@material-ui/core";
-import {Switch, Route} from 'react-router-dom';
 
 import Header from "./components/Header/Header.component";
 import Footer from "./components/Footer/Footer.component";
