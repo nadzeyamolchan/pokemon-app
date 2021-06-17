@@ -1,6 +1,6 @@
 
 const pokemonTableStyles = (theme) => ({
-    cell: () => ({
+    cell: {
         width: '20%',
         padding: '0',
 
@@ -10,11 +10,18 @@ const pokemonTableStyles = (theme) => ({
             width: '100%',
             height: '100%'
         }
-    }),
+    },
 
-    paginationRow: () => ({
+    paginationRow: {
         borderBottom: 'none'
-    })
+    },
+
+    searchAndSelectWrapper: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        margin: theme.spacing(10, 'auto')
+    }
 });
 
 export default pokemonTableStyles;

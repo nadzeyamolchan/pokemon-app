@@ -1,5 +1,7 @@
 import React from "react";
 import {FormControl, InputLabel, MenuItem, Input, Chip, Select} from "@material-ui/core";
+import {SELECT_INPUT_ITEM_HEIGHT} from "../../constants";
+import {SELECT_INPUT_ITEM_PADDING_TOP} from "../../constants";
 import {theme} from '../../theme';
 import selectStyle from "./Select.style";
 
@@ -12,13 +14,10 @@ function getStyles(type, selectedTypes, theme) {
     };
 }
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
 const MenuProps = {
     PaperProps: {
         style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            maxHeight: SELECT_INPUT_ITEM_HEIGHT * 4.5 + SELECT_INPUT_ITEM_PADDING_TOP,
             width: 250,
         },
     },
@@ -31,13 +30,11 @@ export default function TypeSelect(props) {
         props.onTypeSelect(event.target.value);
     };
 
-    /*React.useEffect(() => console.log("Props:", props));*/
 
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel id="demo-multiple-chip-label">Pokemon Type</InputLabel>
+            <InputLabel id="demo-multiple-chip-label">Choose pokemon Type</InputLabel>
             <Select
-                style={{width: 450, marginBottom: 40}}
                 labelId="demo-multiple-chip-label"
                 id="demo-multiple-chip"
                 multiple

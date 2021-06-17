@@ -16,11 +16,14 @@ import {Link} from "react-router-dom";
 
 import TablePaginationActionsComponent from "../TablePaginationActions/TablePaginationActions.component";
 import {pokemonService} from "../../service/PokemonService";
+import {debounce} from "../../utils";
 import {HEADER_CELLS} from "../../constants";
 import {POKEMON_SPRITE} from "../../constants";
 
 import pokemonTableStyles from "./PokemonTable.style";
+
 import TypeSelect from "../Select/Select.component";
+import SearchBox from "../SearchBox/SearchBox.component";
 
 class PokemonTableComponent extends React.Component {
     constructor() {
@@ -32,7 +35,8 @@ class PokemonTableComponent extends React.Component {
             pokemons: [],
             filteredPokemon: [],
             selectedPokemonTypes: [],
-            pokemonTypes: []
+            pokemonTypes: [],
+            searchField: ''
         };
     }
 
@@ -45,7 +49,8 @@ class PokemonTableComponent extends React.Component {
         if (
             this.state.page !== prevState.page || this.state.rowsPerPage !== prevState.rowsPerPage ||
             this.state.pokemons.length !== prevState.pokemons.length ||
-            this.state.selectedPokemonTypes.length !== prevState.selectedPokemonTypes.length
+            this.state.selectedPokemonTypes.length !== prevState.selectedPokemonTypes.length ||
+            this.state.searchField.length !== prevState.searchField.length
         ) {
             this.setPokemonPage();
         }
@@ -59,6 +64,11 @@ class PokemonTableComponent extends React.Component {
         this.setState({rowsPerPage: parseInt(event.target.value, 10), page: 0});
     };
 
+    handleSearchRequest = (event) => {
+        this.setState({searchField: event.target.value});
+        console.log(this.state.searchField);
+    }
+
     uploadPokemons = () => {
         pokemonService.getAllPokemon()
             .then(pokemons => this.setState({pokemons: pokemons.data, totalPokemons: pokemons.total}));
@@ -71,21 +81,28 @@ class PokemonTableComponent extends React.Component {
     }
 
     setPokemonPage = () => {
-        let pageNumber = this.state.page + 1;
-        let rowsNumber = this.state.rowsPerPage;
-
-        let filteredPokemons;
+       let filteredPokemons;
 
         if (this.state.selectedPokemonTypes.length !== 0) {
-            const isTypeSelected = (type) => this.state.selectedPokemonTypes.includes(type)
+            const isTypeSelected = (type) => this.state.selectedPokemonTypes.includes(type);
             filteredPokemons = this.state.pokemons.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
-            let filteredPokemonPage = filteredPokemons.slice((pageNumber - 1) * rowsNumber, pageNumber * rowsNumber);
-            this.setState({filteredPokemon: filteredPokemonPage, totalPokemons: filteredPokemons.length});
+            this.renderPokemonPage(filteredPokemons);
+        } else if (this.state.searchField.length !== 0) {
+            filteredPokemons = this.state.pokemons.filter(pokemon =>
+                pokemon.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+            )
+            this.renderPokemonPage(filteredPokemons);
         } else {
-            let pokemonPage = this.state.pokemons.slice((pageNumber - 1) * rowsNumber, pageNumber * rowsNumber);
-            this.setState({filteredPokemon: pokemonPage, totalPokemons: this.state.pokemons.length});
+            this.renderPokemonPage(this.state.pokemons);
         }
     };
+
+    renderPokemonPage = (pokemonArray) => {
+        let pageNumber = this.state.page + 1;
+        let rowsNumber = this.state.rowsPerPage;
+        let pokemonPage = pokemonArray.slice((pageNumber - 1) * rowsNumber, pageNumber * rowsNumber);
+        this.setState({filteredPokemon: pokemonPage, totalPokemons: pokemonArray.length})
+    }
 
     onPokemonTypeSelect = (types) => {
         this.setState({selectedPokemonTypes: types})
@@ -95,11 +112,14 @@ class PokemonTableComponent extends React.Component {
         const {classes} = this.props;
         return (
             <Container maxWidth="lg">
-                <TypeSelect
-                    types={this.state.pokemonTypes}
-                    selectedTypes={this.state.selectedPokemonTypes}
-                    onTypeSelect={this.onPokemonTypeSelect}
-                />
+                <Container className={classes.searchAndSelectWrapper} maxWidth="lg">
+                    <TypeSelect
+                        types={this.state.pokemonTypes}
+                        selectedTypes={this.state.selectedPokemonTypes}
+                        onTypeSelect={this.onPokemonTypeSelect}
+                    />
+                    <SearchBox placeholder='Type pokemon name' handleChange={debounce(this.handleSearchRequest, 500)}/>
+                </Container>
                 <TableContainer>
                     <Table className={classes.table} aria-label="custom pagination table">
                         <TableHead>
