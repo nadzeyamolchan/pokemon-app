@@ -86,15 +86,17 @@ class PokemonTableComponent extends React.Component {
         if (this.state.selectedPokemonTypes.length !== 0) {
             const isTypeSelected = (type) => this.state.selectedPokemonTypes.includes(type);
             filteredPokemons = this.state.pokemons.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
-            this.renderPokemonPage(filteredPokemons);
+            console.log('filter is working');
         } else if (this.state.searchField.length !== 0) {
             filteredPokemons = this.state.pokemons.filter(pokemon =>
                 pokemon.name.toLowerCase().includes(this.state.searchField.toLowerCase())
             )
-            this.renderPokemonPage(filteredPokemons);
+            console.log('searchFilter is working');
         } else {
-            this.renderPokemonPage(this.state.pokemons);
+            filteredPokemons = this.state.pokemons;
         }
+
+        this.renderPokemonPage(filteredPokemons);
     };
 
     renderPokemonPage = (pokemonArray) => {
