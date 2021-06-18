@@ -9,7 +9,7 @@ import {
     TablePagination,
     TableRow,
     TableHead,
-    withStyles, Container
+    withStyles, Container, CircularProgress
 } from '@material-ui/core';
 
 import {Link} from "react-router-dom";
@@ -108,7 +108,8 @@ class PokemonTableComponent extends React.Component {
     render() {
         const {classes} = this.props;
         return (
-            <Container maxWidth="lg">
+            document.readyState === 'complete' ?
+            (<Container maxWidth="lg">
                 <Container className={classes.searchAndSelectWrapper} maxWidth="lg">
                     <TypeSelect
                         types={this.state.pokemonTypes}
@@ -127,9 +128,9 @@ class PokemonTableComponent extends React.Component {
                                 ))}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                         <TableBody>
                             {this.state.filteredPokemon.map((pokemon) => (
-                                <TableRow key={`${pokemon.id}-${pokemon.name}`}>
+                                <TableRow key={`${pokemon.id}-${pokemon.name}`} hover="true">
                                     <TableCell className={classes.cell}>
                                         <Link to={'/pokemon/' + pokemon.id}>
                                             <figure>
@@ -179,7 +180,8 @@ class PokemonTableComponent extends React.Component {
                         </TableFooter>
                     </Table>
                 </TableContainer>
-            </Container>
+            </Container>) :
+                (<div className={classes.loadingCircleWrapper}><CircularProgress color="primary" /></div>)
         );
     }
 }

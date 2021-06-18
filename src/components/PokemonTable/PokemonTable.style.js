@@ -1,4 +1,3 @@
-
 const pokemonTableStyles = (theme) => ({
     cell: {
         width: '20%',
@@ -20,6 +19,11 @@ const pokemonTableStyles = (theme) => ({
         justifyContent: 'space-between',
         alignContent: 'center',
         margin: theme.spacing(10, 'auto')
+    },
+    loadingCircleWrapper: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
