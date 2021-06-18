@@ -66,7 +66,6 @@ class PokemonTableComponent extends React.Component {
 
     handleSearchRequest = (event) => {
         this.setState({searchField: event.target.value});
-        console.log(this.state.searchField);
     }
 
     uploadPokemons = () => {
@@ -81,21 +80,17 @@ class PokemonTableComponent extends React.Component {
     }
 
     setPokemonPage = () => {
-       let filteredPokemons;
+        let filteredPokemons = this.state.pokemons;
 
-        if (this.state.selectedPokemonTypes.length !== 0) {
-            const isTypeSelected = (type) => this.state.selectedPokemonTypes.includes(type);
-            filteredPokemons = this.state.pokemons.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
-            console.log('filter is working');
-        } else if (this.state.searchField.length !== 0) {
-            filteredPokemons = this.state.pokemons.filter(pokemon =>
+        if (this.state.searchField.length) {
+            filteredPokemons = filteredPokemons.filter(pokemon =>
                 pokemon.name.toLowerCase().includes(this.state.searchField.toLowerCase())
             )
-            console.log('searchFilter is working');
-        } else {
-            filteredPokemons = this.state.pokemons;
         }
-
+        if (this.state.selectedPokemonTypes.length) {
+            const isTypeSelected = (type) => this.state.selectedPokemonTypes.includes(type);
+            filteredPokemons = filteredPokemons.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
+        }
         this.renderPokemonPage(filteredPokemons);
     };
 
