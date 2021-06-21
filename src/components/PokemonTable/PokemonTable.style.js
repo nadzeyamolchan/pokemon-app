@@ -1,19 +1,8 @@
-const pokemonTableStyles = (theme) => ({
-    cell: {
-        width: '20%',
-        padding: '0',
+import {makeStyles} from "@material-ui/core";
 
-        textAlign: 'center',
+//TODO fix data-grid text align and column width
 
-        '& img': {
-            width: '100%',
-        }
-    },
-
-    paginationRow: {
-        borderBottom: 'none'
-    },
-
+const pokemonTableStyles = makeStyles((theme) => ({
     searchAndSelectWrapper: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -24,7 +13,13 @@ const pokemonTableStyles = (theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    dataGrid: {
+        textAlign: 'center'
+    },
+    pokemonSprite: {
+        height: '100%'
     }
-});
+}));
 
 export default pokemonTableStyles;

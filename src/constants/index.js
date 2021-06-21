@@ -1,11 +1,10 @@
 import objectPath from 'object-path';
 
 export const HEADER_CELLS = [
-    '',
+    'ID',
+    'Sprite',
     'Name',
-    'Type',
-    'Weight',
-    'Abilities'
+    'Types'
 ];
 
 export const POKEMON_SPRITE = (pokemon) => {
