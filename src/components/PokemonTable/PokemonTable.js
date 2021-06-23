@@ -16,6 +16,7 @@ export default function PokemonTable() {
     const [pokemonTypes, setPokemonTypes] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
+    const [pageSize, setPageSize] = useState(10);
 
     const classes = pokemonTableStyles();
 
@@ -61,27 +62,44 @@ export default function PokemonTable() {
         {
             field: 'id',
             headerName: HEADER_CELLS[0],
-            width: 300,
-            renderCell: params => (<Link to={'/pokemon/' + params.value}>{`# ${params.value}`}</Link>)
+            renderCell: params => (<Link to={'/pokemon/' + params.value}>{`# ${params.value}`}</Link>),
+            headerAlign: 'center',
+            headerClassName: 'pokemonTableHeader',
+            align: 'center',
+            resizable: 'true',
+            flex: 0.5
         },
         {
             field: 'sprite',
             headerName: HEADER_CELLS[1],
-            width: 300,
             renderCell: (params) =>
-                (<img className={classes.pokemonSprite} src={POKEMON_SPRITE(params.value)} alt='pokemon-sprite'/>)
+                (<img className={classes.pokemonSprite} src={POKEMON_SPRITE(params.value)} alt='pokemon-sprite'/>),
+            headerAlign: 'center',
+            align: 'center',
+            resizable: 'true',
+            flex: 1
         },
         {
             field: 'name',
             headerName: HEADER_CELLS[2],
-            width: 300
+            width: 260,
+            headerAlign: 'center',
+            align: 'center',
+            resizable: 'true',
         },
         {
             field: 'types',
             headerName: HEADER_CELLS[3],
-            width: 300
+            headerAlign: 'center',
+            align: 'center',
+            resizable: 'true',
+            flex: 1
         }
     ];
+
+    const handlePageSizeChange = (params) => {
+        setPageSize(params.pageSize)
+    }
 
     return (
         <Container maxWidth='lg'>
@@ -103,7 +121,10 @@ export default function PokemonTable() {
                           }
                       })}
                       columns={columns}
-                      pageSize={10}
+                      pageSize={pageSize}
+                      onPageSizeChange={handlePageSizeChange}
+                      rowsPerPageOptions={[5, 10, 20]}
+                      pagination
                       autoHeight='true'
                       components={{
                           NoRowsOverlay: CustomNoRowsOverlayComponent,

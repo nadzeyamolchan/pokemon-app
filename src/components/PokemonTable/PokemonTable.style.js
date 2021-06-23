@@ -1,7 +1,5 @@
 import {makeStyles} from "@material-ui/core";
 
-//TODO fix data-grid text align and column width
-
 const pokemonTableStyles = makeStyles((theme) => ({
     searchAndSelectWrapper: {
         display: 'flex',
@@ -13,9 +11,6 @@ const pokemonTableStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    dataGrid: {
-        textAlign: 'center'
     },
     pokemonSprite: {
         height: '100%'
