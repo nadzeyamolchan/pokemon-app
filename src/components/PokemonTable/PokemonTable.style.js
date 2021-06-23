@@ -7,11 +7,6 @@ const pokemonTableStyles = makeStyles((theme) => ({
         alignContent: 'center',
         margin: theme.spacing(10, 'auto')
     },
-    loadingCircleWrapper: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
     pokemonSprite: {
         height: '100%'
     }
