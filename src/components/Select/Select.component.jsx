@@ -1,7 +1,6 @@
 import React from "react";
 import {FormControl, InputLabel, MenuItem, Input, Chip, Select} from "@material-ui/core";
-import {SELECT_INPUT_ITEM_HEIGHT} from "../../constants";
-import {SELECT_INPUT_ITEM_PADDING_TOP} from "../../constants";
+import {SELECT_SIZE} from "../../constants";
 import {theme} from '../../theme';
 import selectStyle from "./Select.style";
 
@@ -17,7 +16,7 @@ function getStyles(type, selectedTypes, theme) {
 const MenuProps = {
     PaperProps: {
         style: {
-            maxHeight: SELECT_INPUT_ITEM_HEIGHT * 4.5 + SELECT_INPUT_ITEM_PADDING_TOP,
+            maxHeight: SELECT_SIZE(),
             width: 250,
         },
     },
