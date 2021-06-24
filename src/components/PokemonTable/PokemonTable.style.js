@@ -9,6 +9,12 @@ const pokemonTableStyles = makeStyles((theme) => ({
     },
     pokemonSprite: {
         height: '100%'
+    },
+    dataGridContainer: {
+        flexGrow: 1
+    },
+    dataGridRows: {
+        cursor: "pointer"
     }
 }));
 

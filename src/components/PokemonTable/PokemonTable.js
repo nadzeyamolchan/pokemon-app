@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {withRouter, useHistory} from "react-router-dom";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
 import pokemonTableStyles from "./PokemonTable.style";
@@ -10,7 +10,7 @@ import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
 
-export default function PokemonTable() {
+function PokemonTable() {
     const [pokemon, setPokemon] = useState([]);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [pokemonTypes, setPokemonTypes] = useState([]);
@@ -19,6 +19,7 @@ export default function PokemonTable() {
     const [pageSize, setPageSize] = useState(10);
 
     const classes = pokemonTableStyles();
+    const history = useHistory();
 
     const uploadInitialPage = () => {
         pokemonService.getPokemonTypes().then(types => {
@@ -62,7 +63,7 @@ export default function PokemonTable() {
         {
             field: 'id',
             headerName: HEADER_CELLS[0],
-            renderCell: params => (<Link to={'/pokemon/' + params.value}>{`# ${params.value}`}</Link>),
+            renderCell: params => params.value,
             headerAlign: 'center',
             headerClassName: 'pokemonTableHeader',
             align: 'center',
@@ -111,7 +112,12 @@ export default function PokemonTable() {
                 />
                 <SearchBox placeholder='Type pokemon name' handleChange={debounce(handleSearchRequest, 500)}/>
             </Container>
+            <div className={classes.dataGridContainer}>
             <DataGrid className={classes.dataGrid}
+                      onRowClick={(param) => {
+                          history.push('/pokemon/' + param.row.id)
+                      }
+                      }
                       rows={filteredPokemon.map(pokemon => {
                           return {
                               id: pokemon.id,
@@ -129,7 +135,11 @@ export default function PokemonTable() {
                       components={{
                           NoRowsOverlay: CustomNoRowsOverlayComponent,
                       }}
+                      getRowClassName={() => classes.dataGridRows}
             />
+            </div>
         </Container>
     )
 }
+
+export default withRouter(PokemonTable)
