@@ -17,3 +17,5 @@ export const SELECT_SIZE = () => {
 
     return  SELECT_INPUT_ITEM_HEIGHT * 4.5 + SELECT_INPUT_ITEM_PADDING_TOP
 }
+
+export const POKEMON_API_URL = 'https://pokeapi.co/api/v2';

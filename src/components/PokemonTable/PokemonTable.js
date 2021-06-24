@@ -3,33 +3,24 @@ import {withRouter, useHistory} from "react-router-dom";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
 import pokemonTableStyles from "./PokemonTable.style";
-import {pokemonService} from "../../service/PokemonService";
-import {HEADER_CELLS, POKEMON_SPRITE} from "../../constants";
+import {HEADER_CELLS, POKEMON_SPRITE, POKEMON_API_URL} from "../../constants";
 import TypeSelect from "../Select/Select.component";
 import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
+import usePokemonList from "../../hooks/usePokemonList";
+import usePokemonTypes from "../../hooks/usePokemonTypes";
 
 function PokemonTable() {
-    const [pokemon, setPokemon] = useState([]);
+    const pokemonTypes = usePokemonTypes(POKEMON_API_URL);
+    const pokemon = usePokemonList(POKEMON_API_URL);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
-    const [pokemonTypes, setPokemonTypes] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
     const [pageSize, setPageSize] = useState(10);
 
     const classes = pokemonTableStyles();
     const history = useHistory();
-
-    const uploadInitialPage = () => {
-        pokemonService.getPokemonTypes().then(types => {
-            setPokemonTypes(types.data);
-        });
-        pokemonService.getAllPokemon().then(pokemon => {
-            setPokemon(pokemon.data);
-            setFilteredPokemon(pokemon.data);
-        });
-    }
 
     const onPokemonTypeSelect = (types) => {
         setSelectedPokemonTypes(types);
@@ -38,12 +29,6 @@ function PokemonTable() {
     const handleSearchRequest = (event) => {
         setSearchField(event.target.value);
     }
-
-    useEffect(() => {
-        if (pokemon && pokemon.length === 0) {
-            uploadInitialPage();
-        }
-    }, [pokemon]);
 
     useEffect(() => {
         let filteredPokemon = pokemon;
