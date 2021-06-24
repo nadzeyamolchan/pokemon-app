@@ -67,7 +67,6 @@ function PokemonTable() {
             headerAlign: 'center',
             headerClassName: 'pokemonTableHeader',
             align: 'center',
-            resizable: 'true',
             flex: 0.5
         },
         {
@@ -77,7 +76,6 @@ function PokemonTable() {
                 (<img className={classes.pokemonSprite} src={POKEMON_SPRITE(params.value)} alt='pokemon-sprite'/>),
             headerAlign: 'center',
             align: 'center',
-            resizable: 'true',
             flex: 1
         },
         {
@@ -85,15 +83,13 @@ function PokemonTable() {
             headerName: HEADER_CELLS[2],
             width: 260,
             headerAlign: 'center',
-            align: 'center',
-            resizable: 'true',
+            align: 'center'
         },
         {
             field: 'types',
             headerName: HEADER_CELLS[3],
             headerAlign: 'center',
             align: 'center',
-            resizable: 'true',
             flex: 1
         }
     ];

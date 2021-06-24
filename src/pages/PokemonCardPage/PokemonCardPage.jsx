@@ -11,7 +11,6 @@ export default function PokemonCardPage() {
     const [pokemon, setPokemon] = React.useState(null);
     React.useEffect(() => pokemonService.getPokemonById(id).then(res => setPokemon(res.data)), [id]);
     const classes = pokemonCardPageStyle();
-    console.log(POKEMON_SPRITE(pokemon));
     return pokemon ? (
         <div>
             <PokemonCard name={pokemon.name}

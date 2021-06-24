@@ -1,4 +1,6 @@
 import {Component} from "react";
+import {Container} from "@material-ui/core";
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 export class ErrorBoundary extends Component {
     constructor(props) {
@@ -19,14 +21,19 @@ export class ErrorBoundary extends Component {
         if (this.state.errorInfo) {
             // Error path, render error UI
             return (
-                <div>
-                    <h2>Something went wrong.</h2>
-                    {<details>
+                <Container maxWidth='md'>
+
+                    <Alert severity="error">
+                        <AlertTitle>Ooops! Something went wrong :(</AlertTitle>
                         {this.state.error && this.state.error.toString()}
-                        <br/>
-                        {this.state.errorInfo.componentStack}
-                    </details>}
-                </div>
+                        {<details>
+                            <summary>Get more info</summary>
+                            <br/>
+                            {this.state.errorInfo.componentStack}
+                        </details>}
+                    </Alert>
+
+                </Container>
             );
         }
         // Normally, just render children
