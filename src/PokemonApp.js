@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer.component";
 import PokemonTablePage from "./pages/PokemonTablePage/PokemonTablePage";
 import Homepage from "./pages/Homepage/Homepage";
 import PokemonCardPage from "./pages/PokemonCardPage/PokemonCardPage"
+import TestApp from "./components/PokemonCard(modal)/test";
 
 function PokemonApp() {
     return (
@@ -20,6 +21,7 @@ function PokemonApp() {
                     <Route path='/pokemon/:id' component={PokemonCardPage}/>
                 </Switch>
                 <Footer/>
+                <TestApp/>
             </ThemeProvider>
         </ErrorBoundary>
     );
