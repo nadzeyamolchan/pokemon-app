@@ -19,7 +19,8 @@ const headerStyle = makeStyles((theme) =>({
 
             color: theme.palette.grey,
             textDecoration: 'none',
-            fontFamily: theme.typography.body2.fontFamily,
+            fontFamily: theme.typography.body1.fontFamily,
+            fontSize: theme.typography.h2.fontSize,
 
             '&:hover': {
                 transform: 'scale(1.02)'
@@ -27,6 +28,10 @@ const headerStyle = makeStyles((theme) =>({
 
             '&:active': {
                 color: theme.palette.primary.main
+            },
+
+            '&:visited': {
+                color: theme.palette.secondary.main
             },
 
             '&:first-child': {

@@ -1,14 +1,23 @@
 import {makeStyles} from "@material-ui/core";
 
-const searchBoxStyle = makeStyles({
+const searchBoxStyle = makeStyles(() => ({
     searchBoxWrapper: {
-        width: '100%',
+        width: '50%',
         display: 'flex',
         flexWrap: 'nowrap',
         justifyContent: 'flex-end',
-        alignItems: 'center',
-        padding: '2rem 1rem'
+        alignItems: 'center'
+    },
+
+    searchInput: {
+        width: '60%'
+    },
+
+    searchIcon: {
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
-})
+}))
 
 export default searchBoxStyle;

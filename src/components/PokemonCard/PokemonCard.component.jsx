@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Container from "@material-ui/core/Container";
 import {Typography} from "@material-ui/core";
 import pokemonCardStyle from "./PokemonCard.style";
 
-export default function PokemonCard(props) {
+function PokemonCard(props) {
     const classes = pokemonCardStyle();
+
     return (
         <Container className={classes.pokemonCardContainer}>
             <img src={props.image} alt="pokemon"/>
@@ -20,3 +22,12 @@ export default function PokemonCard(props) {
         </Container>
     )
 }
+
+PokemonCard.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+    height: PropTypes.number,
+    weight: PropTypes.number
+}
+
+export default PokemonCard;
