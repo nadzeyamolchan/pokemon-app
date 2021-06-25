@@ -96,7 +96,7 @@ function PokemonTable() {
             <div className={classes.dataGridContainer}>
             <DataGrid className={classes.dataGrid}
                       onRowClick={(param) => {
-                          history.push('/pokemon/' + param.row.id)
+                          history.push(`/pokemon/${param.row.id}`)
                       }
                       }
                       rows={filteredPokemon.map(pokemon => {
