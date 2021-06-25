@@ -10,7 +10,9 @@ export default function usePokemon(pokemonApiUrl, id) {
     }, [pokemonApiUrl, id])
 
     useEffect(() => {
-        getPokemon()
+        if(!pokemon) {
+            getPokemon()
+        }
     }, [getPokemon, pokemon]);
 
     return pokemon;
