@@ -14,7 +14,7 @@ export const styles = (theme) => ({
     },
 });
 
-export const useDialogStyle = makeStyles((theme) => ({
+export const useDialogStyle = makeStyles(() => ({
     dialogContent: {
         display: 'flex',
         flexDirection: "row"
@@ -22,5 +22,8 @@ export const useDialogStyle = makeStyles((theme) => ({
     dialogContentDescription: {
         display: "flex",
         flexDirection: "column"
+    },
+    pokemonSprite : {
+        width: '50%'
     }
 }))

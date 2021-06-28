@@ -1,15 +1,21 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import {styles, useDialogStyle} from "./test.styles";
+import {styles, useDialogStyle} from "./PokemonModalWindow.style";
 import {DialogContent} from "@material-ui/core";
+import PropTypes from "prop-types";
 
+PokemonModalWindow.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+    height: PropTypes.number,
+    weight: PropTypes.number
+}
 
 const DialogTitle = withStyles(styles)((props) => {
     const { children, classes, onClose, ...other } = props;
@@ -25,44 +31,24 @@ const DialogTitle = withStyles(styles)((props) => {
     );
 });
 
-export default function CustomizedDialogs() {
-    const [open, setOpen] = React.useState(false);
+export default function PokemonModalWindow(props) {
 
     const classes = useDialogStyle();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const testPokemon = {
-        name: 'Bulbasaur',
-        id: 1,
-        height: 7,
-        weight: 69,
-        sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-    }
-
     return (
         <div>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Click me!
-            </Button>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth="md">
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    {`# ${testPokemon.id} ${testPokemon.name}`}
+            <Dialog onClose={props.isClose} aria-labelledby="customized-dialog-title" open={props.isOpen} maxWidth="md">
+                <DialogTitle id="customized-dialog-title" onClose={props.isClose}>
+                    {`# ${props.id} ${props.name}`}
                 </DialogTitle>
                 <DialogContent dividers className={classes.dialogContent}>
-                    <img src={testPokemon.sprite} alt='pokemon-sprite'/>
+                    <img className={classes.pokemonSprite} src={props.sprite} alt='pokemon-sprite'/>
                     <DialogContent dividers className={classes.dialogContentDescription}>
                         <Typography gutterBottom>
-                             {`Height: ${testPokemon.height}`}
+                             {`Height: ${props.height}`}
                         </Typography>
                         <Typography gutterBottom>
-                            {`Weight: ${testPokemon.weight}`}
+                            {`Weight: ${props.weight}`}
                         </Typography>
                     </DialogContent>
                 </DialogContent>
