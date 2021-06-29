@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {withRouter, useHistory} from "react-router-dom";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
 import pokemonTableStyles from "./PokemonTable.style";
@@ -10,17 +9,19 @@ import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
 import usePokemonList from "../../hooks/usePokemonList";
 import usePokemonTypes from "../../hooks/usePokemonTypes";
+import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
 
-function PokemonTable() {
+export default function PokemonTable() {
     const pokemonTypes = usePokemonTypes(POKEMON_API_URL);
     const pokemon = usePokemonList(POKEMON_API_URL);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
     const [pageSize, setPageSize] = useState(10);
+    const [showModalWindow, setShowModalWindow] = useState(false);
+    const [currentPokemon, setCurrentPokemon] = useState({});
 
     const classes = pokemonTableStyles();
-    const history = useHistory();
 
     const onPokemonTypeSelect = (types) => {
         setSelectedPokemonTypes(types);
@@ -28,6 +29,18 @@ function PokemonTable() {
 
     const handleSearchRequest = (event) => {
         setSearchField(event.target.value);
+    }
+
+    const handleCloseModal = () => {
+        setShowModalWindow(false)
+    };
+
+    const handleCurrentPokemon = (param) => {
+        setCurrentPokemon(param.row.sprite);
+    }
+
+    const handlePageSizeChange = (params) => {
+        setPageSize(params.pageSize)
     }
 
     useEffect(() => {
@@ -79,9 +92,7 @@ function PokemonTable() {
         }
     ];
 
-    const handlePageSizeChange = (params) => {
-        setPageSize(params.pageSize)
-    }
+
 
     return (
         <Container maxWidth='lg'>
@@ -95,9 +106,11 @@ function PokemonTable() {
             </Container>
             <div className={classes.dataGridContainer}>
             <DataGrid className={classes.dataGrid}
-                      onRowClick={(param) => {
-                          history.push(`/pokemon/${param.row.id}`)
-                      }
+                      onRowClick={
+                          (param ) => {
+                              handleCurrentPokemon(param);
+                              setShowModalWindow(true);
+                          }
                       }
                       rows={filteredPokemon.map(pokemon => {
                           return {
@@ -119,8 +132,15 @@ function PokemonTable() {
                       getRowClassName={() => classes.dataGridRows}
             />
             </div>
+            <PokemonModalWindow
+                isOpen={showModalWindow}
+                isClose={handleCloseModal}
+                id={currentPokemon.id}
+                name={currentPokemon.name}
+                sprite={POKEMON_SPRITE(currentPokemon)}
+                height={currentPokemon.height}
+                weight={currentPokemon.weight}
+                />
         </Container>
     )
 }
-
-export default withRouter(PokemonTable)
