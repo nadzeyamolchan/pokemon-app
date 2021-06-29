@@ -25,7 +25,7 @@ export async function fetchPokemon(dispatch) {
         }
     });
 
-    const pokemonList = await axios.get (getPokemonUrl, {
+    const pokemonList = await axios.get(getPokemonUrl, {
         params: {
             offset: 0,
             limit: pokemonCount.count
@@ -34,5 +34,15 @@ export async function fetchPokemon(dispatch) {
 
     const pokemonData = await Promise.all(pokemonList.results.map(pokemon => axios.get(getPokemonUrl + '/' + pokemon.name)));
 
-    dispatch({type: 'getAllPokemon', payload: pokemonData})
+    const pokemonObjects = pokemonData.map((
+        {
+            id,
+            name,
+            weight,
+            height,
+            types,
+            sprites: {other: {dream_world: {front_default: sprite}}},
+        }) => ({id, name, weight, height, types, sprite}))
+
+    dispatch({type: 'getAllPokemon', payload: pokemonObjects})
 }

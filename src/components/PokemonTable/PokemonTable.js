@@ -1,29 +1,28 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import pokemonTableStyles from "./PokemonTable.style";
-import {HEADER_CELLS, POKEMON_SPRITE, POKEMON_API_URL} from "../../constants";
+import {HEADER_CELLS} from "../../constants";
 import TypeSelect from "../Select/Select.component";
 import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
-import usePokemonTypes from "../../hooks/usePokemonTypes";
 import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
 
-
 export default function PokemonTable() {
-    const pokemonTypes = usePokemonTypes(POKEMON_API_URL);
+    const pokemonTypes = useSelector(state => state.pokemonTypes);
     const pokemon = useSelector(state => state.pokemon);
+    const currentPokemon = useSelector(state => state.selectedPokemon);
+    const showModalWindow = useSelector(state => state.selectedPokemon.showPokemonModalWindow);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
     const [pageSize, setPageSize] = useState(10);
-    const [showModalWindow, setShowModalWindow] = useState(false);
-    const [currentPokemon, setCurrentPokemon] = useState({});
 
     const classes = pokemonTableStyles();
+    const dispatch = useDispatch();
 
     const onPokemonTypeSelect = (types) => {
         setSelectedPokemonTypes(types);
@@ -34,12 +33,8 @@ export default function PokemonTable() {
     }
 
     const handleCloseModal = () => {
-        setShowModalWindow(false)
+        dispatch({type: 'closeModalWindow', payload: showModalWindow})
     };
-
-    const handleCurrentPokemon = (param) => {
-        setCurrentPokemon(param.row.sprite);
-    }
 
     const handlePageSizeChange = (params) => {
         setPageSize(params.pageSize)
@@ -75,7 +70,7 @@ export default function PokemonTable() {
             field: 'sprite',
             headerName: HEADER_CELLS[1],
             renderCell: (params) =>
-                (<img className={classes.pokemonSprite} src={POKEMON_SPRITE(params.value)} alt='pokemon-sprite'/>),
+                (<img className={classes.pokemonSprite} src={params.value} alt='pokemon-sprite'/>),
             headerAlign: 'center',
             align: 'center',
             flex: 1
@@ -96,8 +91,6 @@ export default function PokemonTable() {
         }
     ];
 
-
-
     return (
         <Container maxWidth='lg'>
             <Container className={classes.searchAndSelectWrapper} maxWidth="lg">
@@ -112,14 +105,13 @@ export default function PokemonTable() {
             <DataGrid className={classes.dataGrid}
                       onRowClick={
                           (param ) => {
-                              handleCurrentPokemon(param);
-                              setShowModalWindow(true);
+                              dispatch({type: 'selectPokemon', payload: param.row});
                           }
                       }
                       rows={filteredPokemon.map(pokemon => {
                           return {
                               id: pokemon.id,
-                              sprite: pokemon,
+                              sprite: pokemon.sprite,
                               name: pokemon.name,
                               types: pokemon.types.map(pokemonType => pokemonType.type.name)
                           }
@@ -139,11 +131,11 @@ export default function PokemonTable() {
             <PokemonModalWindow
                 isOpen={showModalWindow}
                 isClose={handleCloseModal}
-                id={currentPokemon.id}
-                name={currentPokemon.name}
-                sprite={POKEMON_SPRITE(currentPokemon)}
-                height={currentPokemon.height}
-                weight={currentPokemon.weight}
+                id={currentPokemon.selectedPokemon.id}
+                name={currentPokemon.selectedPokemon.name}
+                sprite={currentPokemon.selectedPokemon.sprite}
+                height={currentPokemon.selectedPokemon.height}
+                weight={currentPokemon.selectedPokemon.weight}
                 />
         </Container>
     )

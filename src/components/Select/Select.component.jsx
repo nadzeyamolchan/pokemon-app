@@ -3,6 +3,7 @@ import {FormControl, InputLabel, MenuItem, Input, Chip, Select} from "@material-
 import {SELECT_SIZE} from "../../constants";
 import {theme} from '../../theme';
 import selectStyle from "./Select.style";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 function getStyles(type, selectedTypes, theme) {
     return {
@@ -33,27 +34,31 @@ export default function TypeSelect(props) {
     return (
         <FormControl className={classes.formControl}>
             <InputLabel id="demo-multiple-chip-label">Choose pokemon Type</InputLabel>
-            <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                value={props.selectedTypes}
-                onChange={handleChange}
-                input={<Input id="select-multiple-chip"/>}
-                renderValue={(selected) => (
-                    <div className={classes.chips}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value} className={classes.chip}/>
+            {props.types.length ? (
+                <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    value={props.selectedTypes}
+                    onChange={handleChange}
+                    input={<Input id="select-multiple-chip"/>}
+                    renderValue={(selected) => (
+                        <div className={classes.chips}>
+                            {selected.map((value) => (
+                                <Chip key={value} label={value} className={classes.chip}/>
+                            ))}
+                        </div>
+                    )}
+                    MenuProps={MenuProps}
+                >
+                    {
+                        props.types.map((type) => (
+                            <MenuItem key={type} value={type} style={getStyles(type, props.selectedTypes, theme)}>
+                                {type}
+                            </MenuItem>
                         ))}
-                    </div>
-                )}
-                MenuProps={MenuProps}
-            >
-                {props.types.map((type) => (
-                    <MenuItem key={type} value={type} style={getStyles(type, props.selectedTypes, theme)}>
-                        {type}
-                    </MenuItem>
-                ))}
-            </Select>
+                </Select>
+            ) : <Skeleton type='text'/>}
+
         </FormControl>)
 }

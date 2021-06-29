@@ -7,6 +7,7 @@ import axios from "axios";
 import PokemonApp from './PokemonApp';
 import store from "./redux/store";
 import {fetchPokemon} from "./redux/pokemonSlice";
+import {fetchPokemonTypes} from "./redux/pokemonTypesSlice";
 
 axios.interceptors.response.use(function (response) {
     return response.data;
@@ -15,6 +16,7 @@ axios.interceptors.response.use(function (response) {
 });
 
 store.dispatch(fetchPokemon);
+store.dispatch(fetchPokemonTypes);
 
 ReactDOM.render(
   <React.StrictMode>
