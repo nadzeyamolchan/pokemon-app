@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
+import {useSelector} from "react-redux";
+
 import pokemonTableStyles from "./PokemonTable.style";
 import {HEADER_CELLS, POKEMON_SPRITE, POKEMON_API_URL} from "../../constants";
 import TypeSelect from "../Select/Select.component";
 import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
-import usePokemonList from "../../hooks/usePokemonList";
 import usePokemonTypes from "../../hooks/usePokemonTypes";
 import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
 
+
 export default function PokemonTable() {
     const pokemonTypes = usePokemonTypes(POKEMON_API_URL);
-    const pokemon = usePokemonList(POKEMON_API_URL);
+    const pokemon = useSelector(state => state.pokemon);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
@@ -44,17 +46,19 @@ export default function PokemonTable() {
     }
 
     useEffect(() => {
-        let filteredPokemon = pokemon;
-        if (searchField) {
-            filteredPokemon = filteredPokemon.filter(pokemon =>
-                pokemon.name.toLowerCase().includes(searchField.toLowerCase())
-            )
+        if(pokemon.length) {
+            let filteredPokemon = pokemon;
+            if (searchField) {
+                filteredPokemon = filteredPokemon.filter(pokemon =>
+                    pokemon.name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+            if (selectedPokemonTypes && selectedPokemonTypes.length) {
+                const isTypeSelected = (type) => selectedPokemonTypes.includes(type);
+                filteredPokemon = filteredPokemon.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
+            }
+            setFilteredPokemon(filteredPokemon);
         }
-        if (selectedPokemonTypes && selectedPokemonTypes.length) {
-            const isTypeSelected = (type) => selectedPokemonTypes.includes(type);
-            filteredPokemon = filteredPokemon.filter(pokemon => pokemon.types.map(type => type.type.name).some(isTypeSelected));
-        }
-        setFilteredPokemon(filteredPokemon);
     }, [pokemon, searchField, selectedPokemonTypes])
 
     const columns = [
