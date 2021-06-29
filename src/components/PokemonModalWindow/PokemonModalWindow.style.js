@@ -16,8 +16,7 @@ export const styles = (theme) => ({
 
 export const useDialogStyle = makeStyles(() => ({
     dialogContent: {
-        display: 'flex',
-        flexDirection: "row"
+        display: 'flex'
     },
     dialogContentDescription: {
         display: "flex",
