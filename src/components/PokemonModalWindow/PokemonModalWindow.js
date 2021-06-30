@@ -1,10 +1,10 @@
 import React from 'react';
-import { DialogContent, Typography, IconButton, Dialog, withStyles } from '@material-ui/core';
+import { DialogContent, Typography, IconButton, Dialog } from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from "prop-types";
 
-import {styles, useDialogStyle} from "./PokemonModalWindow.style";
+import {useDialogStyle, useDialogTitleStyles} from "./PokemonModalWindow.style";
 import {connect} from "react-redux";
 
 PokemonModalWindow.propTypes = {
@@ -14,19 +14,20 @@ PokemonModalWindow.propTypes = {
     weight: PropTypes.number
 }
 
-const DialogTitle = withStyles(styles)((props) => {
-    const { children, classes, onClose} = props;
+const DialogTitle = (props) => {
+    const classes = useDialogTitleStyles();
+    const {children, onClose} = props;
     return (
         <MuiDialogTitle disableTypography {...props} className={classes.root} >
             <Typography variant="h6">{children}</Typography>
             {onClose ? (
-                <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+                <IconButton aria-label="close" edge='start' className={classes.closeButton} onClick={onClose}>
                     <CloseIcon />
                 </IconButton>
             ) : null}
         </MuiDialogTitle>
     );
-});
+};
 
 function PokemonModalWindow({pokemonObject, ...props}) {
 
