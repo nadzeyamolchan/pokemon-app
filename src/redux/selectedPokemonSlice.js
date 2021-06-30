@@ -22,3 +22,5 @@ export default function selectedPokemonReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const closeModalWindowAction = () => ({type: 'closeModalWindow'});

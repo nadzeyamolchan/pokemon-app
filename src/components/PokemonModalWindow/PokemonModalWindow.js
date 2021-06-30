@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from "prop-types";
 
 import {styles, useDialogStyle} from "./PokemonModalWindow.style";
+import {connect} from "react-redux";
 
 PokemonModalWindow.propTypes = {
     image: PropTypes.string,
@@ -27,7 +28,7 @@ const DialogTitle = withStyles(styles)((props) => {
     );
 });
 
-export default function PokemonModalWindow(props) {
+function PokemonModalWindow({pokemonObject, ...props}) {
 
     const classes = useDialogStyle();
 
@@ -35,16 +36,16 @@ export default function PokemonModalWindow(props) {
         <div>
             <Dialog onClose={props.isClose} aria-labelledby="customized-dialog-title" open={props.isOpen} maxWidth="md">
                 <DialogTitle id="customized-dialog-title" onClose={props.isClose}>
-                    {`# ${props.id} ${props.name}`}
+                    {`# ${pokemonObject.selectedPokemon.id} ${pokemonObject.selectedPokemon.name}`}
                 </DialogTitle>
                 <DialogContent dividers className={classes.dialogContent}>
-                    <img className={classes.pokemonSprite} src={props.sprite} alt='pokemon-sprite'/>
+                    <img className={classes.pokemonSprite} src={pokemonObject.selectedPokemon.sprite} alt='pokemon-sprite'/>
                     <DialogContent dividers className={classes.dialogContentDescription}>
                         <Typography gutterBottom>
-                             {`Height: ${props.height}`}
+                             {`Height: ${pokemonObject.selectedPokemon.height}`}
                         </Typography>
                         <Typography gutterBottom>
-                            {`Weight: ${props.weight}`}
+                            {`Weight: ${pokemonObject.selectedPokemon.weight}`}
                         </Typography>
                     </DialogContent>
                 </DialogContent>
@@ -52,3 +53,9 @@ export default function PokemonModalWindow(props) {
         </div>
     );
 }
+
+const mapStateToProps = (state) => ({
+    pokemonObject: state.selectedPokemon
+})
+
+export default connect(mapStateToProps)(PokemonModalWindow);
