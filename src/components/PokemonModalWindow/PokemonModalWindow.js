@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import {useDialogStyle, useDialogTitleStyles} from "./PokemonModalWindow.style";
 import {useDispatch, useSelector} from "react-redux";
+import {actionTypes} from "../../redux/actionTypes";
 
 PokemonModalWindow.propTypes = {
     image: PropTypes.string,
@@ -37,7 +38,7 @@ export default function PokemonModalWindow() {
     const showModalWindow = useSelector(state => state.selectedPokemon.showPokemonModalWindow);
 
     const handleToggleModalWindow = () => {
-        dispatch({type: 'toggleModalWindow'})
+        dispatch({type: actionTypes.toggleModalWindow})
     }
 
     return (

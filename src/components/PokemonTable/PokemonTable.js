@@ -10,6 +10,7 @@ import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
 import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
+import {actionTypes} from "../../redux/actionTypes";
 
 export default function PokemonTable() {
     const pokemonTypes = useSelector(state => state.pokemonTypes);
@@ -35,7 +36,7 @@ export default function PokemonTable() {
     }
 
     const handleRowClick = (param) => {
-        dispatch({type: 'selectPokemon', payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
+        dispatch({type: actionTypes.selectPokemon, payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
     }
 
     useEffect(() => {

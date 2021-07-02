@@ -1,6 +1,5 @@
 import axios from "axios";
-
-import {POKEMON_API_URL} from "../constants";
+import {actionTypes} from "./actionTypes";
 
 const initialState = {
     pokemon: []
@@ -17,22 +16,21 @@ export default function pokemonReducer(state = initialState, action) {
 }
 
 export async function fetchPokemon(dispatch) {
-    const getPokemonUrl = `${POKEMON_API_URL}/pokemon`;
-    const pokemonCount = await axios.get(getPokemonUrl, {
+    const pokemonCount = await axios.get('/pokemon', {
         params: {
             offset: 0,
             limit: 1
         }
     });
 
-    const pokemonList = await axios.get(getPokemonUrl, {
+    const pokemonList = await axios.get('/pokemon', {
         params: {
             offset: 0,
             limit: pokemonCount.count
         }
     })
 
-    const pokemonData = await Promise.all(pokemonList.results.map(pokemon => axios.get(getPokemonUrl + '/' + pokemon.name)));
+    const pokemonData = await Promise.all(pokemonList.results.map(pokemon => axios.get('/pokemon/' + pokemon.name)));
 
     const pokemonObjects = pokemonData.map((
         {
@@ -44,5 +42,5 @@ export async function fetchPokemon(dispatch) {
             sprites: {other: {dream_world: {front_default: sprite}}},
         }) => ({id, name, weight, height, types, sprite}))
 
-    dispatch({type: 'getAllPokemon', payload: pokemonObjects})
+    dispatch({type: actionTypes.getAllPokemon, payload: pokemonObjects})
 }

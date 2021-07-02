@@ -1,6 +1,5 @@
 import axios from "axios";
-
-import {POKEMON_API_URL} from "../constants";
+import {actionTypes} from "./actionTypes";
 
 const initialState = {
     pokemonTypes: []
@@ -17,10 +16,8 @@ export default function pokemonTypesReducer(state = initialState, action) {
 }
 
 export async function fetchPokemonTypes(dispatch) {
-    const getPokemonTypesUrl = `${POKEMON_API_URL}/type`;
-    const response = await axios.get(getPokemonTypesUrl);
+    const response = await axios.get('/type');
     const pokemonTypes = response.results.map(type => type.name);
 
-
-    dispatch({type: 'getPokemonTypes', payload: pokemonTypes})
+    dispatch({type: actionTypes.getPokemonTypes, payload: pokemonTypes})
 }
