@@ -12,7 +12,7 @@ export default function selectedPokemonReducer(state = initialState, action) {
                 showPokemonModalWindow: !state.showPokemonModalWindow
             }
         }
-        case 'closeModalWindow': {
+        case 'toggleModalWindow': {
             return {
                 ...state,
                 showPokemonModalWindow: !state.showPokemonModalWindow
@@ -22,5 +22,3 @@ export default function selectedPokemonReducer(state = initialState, action) {
             return state;
     }
 }
-
-export const closeModalWindowAction = () => ({type: 'closeModalWindow'});

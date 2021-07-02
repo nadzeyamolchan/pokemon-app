@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {DataGrid} from '@material-ui/data-grid';
 import Container from "@material-ui/core/Container";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import pokemonTableStyles from "./PokemonTable.style";
 import {HEADER_CELLS} from "../../constants";
@@ -10,12 +10,10 @@ import SearchBox from "../SearchBox/SearchBox.component";
 import {debounce} from "../../utils";
 import {CustomNoRowsOverlayComponent} from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
 import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
-import {closeModalWindowAction} from "../../redux/selectedPokemonSlice";
 
-function PokemonTable({closeModalWindowAction}) {
+export default function PokemonTable() {
     const pokemonTypes = useSelector(state => state.pokemonTypes);
     const pokemon = useSelector(state => state.pokemon);
-    const showModalWindow = useSelector(state => state.selectedPokemon.showPokemonModalWindow);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
     const [searchField, setSearchField] = useState('');
@@ -34,6 +32,10 @@ function PokemonTable({closeModalWindowAction}) {
 
     const handlePageSizeChange = (params) => {
         setPageSize(params.pageSize)
+    }
+
+    const handleRowClick = (param) => {
+        dispatch({type: 'selectPokemon', payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
     }
 
     useEffect(() => {
@@ -99,11 +101,7 @@ function PokemonTable({closeModalWindowAction}) {
             </Container>
             <div className={classes.dataGridContainer}>
             <DataGrid className={classes.dataGrid}
-                      onRowClick={
-                          (param ) => {
-                              dispatch({type: 'selectPokemon', payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
-                          }
-                      }
+                      onRowClick={handleRowClick}
                       rows={filteredPokemon.map(pokemon => {
                           return {
                               id: pokemon.id,
@@ -124,16 +122,7 @@ function PokemonTable({closeModalWindowAction}) {
                       getRowClassName={() => classes.dataGridRows}
             />
             </div>
-            <PokemonModalWindow
-                isOpen={showModalWindow}
-                isClose={closeModalWindowAction}
-                />
+            <PokemonModalWindow/>
         </Container>
     )
 }
-
-const mapDispatchToProps = dispatch => ({
-    closeModalWindowAction: () => dispatch(closeModalWindowAction())
-});
-
-export default connect(null, mapDispatchToProps)(PokemonTable);
