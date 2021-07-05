@@ -7,7 +7,7 @@ const initialState = {
 
 export default function pokemonReducer(state = initialState, action) {
     switch (action.type) {
-        case 'getAllPokemon': {
+        case actionTypes.getAllPokemon: {
             return action.payload
         }
         default:

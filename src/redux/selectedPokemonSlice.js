@@ -1,3 +1,5 @@
+import {actionTypes} from "./actionTypes";
+
 const initialState = {
     selectedPokemon: {},
     showPokemonModalWindow: false
@@ -5,14 +7,14 @@ const initialState = {
 
 export default function selectedPokemonReducer(state = initialState, action) {
     switch (action.type) {
-        case 'selectPokemon': {
+        case actionTypes.selectPokemon: {
             return {
                 ...state,
                 selectedPokemon: action.payload,
                 showPokemonModalWindow: !state.showPokemonModalWindow
             }
         }
-        case 'toggleModalWindow': {
+        case actionTypes.toggleModalWindow: {
             return {
                 ...state,
                 showPokemonModalWindow: !state.showPokemonModalWindow
