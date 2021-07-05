@@ -7,7 +7,7 @@ const initialState = {
 
 export default function pokemonReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.getAllPokemon: {
+        case actionTypes.GET_ALL_POKEMON: {
             return action.payload
         }
         default:
@@ -42,5 +42,5 @@ export async function fetchPokemon(dispatch) {
             sprites: {other: {dream_world: {front_default: sprite}}},
         }) => ({id, name, weight, height, types, sprite}))
 
-    dispatch({type: actionTypes.getAllPokemon, payload: pokemonObjects})
+    dispatch({type: actionTypes.GET_ALL_POKEMON, payload: pokemonObjects})
 }

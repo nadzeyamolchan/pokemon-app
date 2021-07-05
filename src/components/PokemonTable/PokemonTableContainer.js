@@ -30,7 +30,7 @@ export default function PokemonTableContainer() {
     }
 
     const handleRowClick = (param) => {
-        dispatch({type: actionTypes.selectPokemon, payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
+        dispatch({type: actionTypes.SELECT_POKEMON, payload: pokemon.find(pokemon => pokemon.id === param.row.id)});
     }
 
     useEffect(() => {

@@ -1,11 +1,11 @@
 import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import { DialogContent, Typography, IconButton, Dialog } from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from "prop-types";
 
 import {useDialogStyle, useDialogTitleStyles} from "./PokemonModalWindow.style";
-import {useDispatch, useSelector} from "react-redux";
 import {actionTypes} from "../../redux/actionTypes";
 
 PokemonModalWindow.propTypes = {
@@ -34,11 +34,10 @@ export default function PokemonModalWindow() {
 
     const classes = useDialogStyle();
     const dispatch = useDispatch();
-    const pokemonObject = useSelector(state => state.selectedPokemon.selectedPokemon);
-    const showModalWindow = useSelector(state => state.selectedPokemon.showPokemonModalWindow);
+    const {selectedPokemon: pokemonObject, showPokemonModalWindow: showModalWindow} = useSelector(state => state.selectedPokemon);
 
     const handleToggleModalWindow = () => {
-        dispatch({type: actionTypes.toggleModalWindow})
+        dispatch({type: actionTypes.TOGGLE_MODAL_WINDOW})
     }
 
     return (

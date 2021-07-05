@@ -1,9 +1,9 @@
 import React from "react";
+import Skeleton from "@material-ui/lab/Skeleton";
 import {FormControl, InputLabel, MenuItem, Input, Chip, Select} from "@material-ui/core";
 import {SELECT_SIZE} from "../../constants";
 import {theme} from '../../theme';
 import selectStyle from "./Select.style";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 function getStyles(type, selectedTypes, theme) {
     return {
