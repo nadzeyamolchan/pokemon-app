@@ -1,9 +1,9 @@
 import React from "react";
 
-import PokemonTable from "../../components/PokemonTable/PokemonTable";
+import PokemonTableContainer from "../../components/PokemonTable/PokemonTableContainer";
 
 const PokemonTablePage = () => (
-    <PokemonTable/>
+    <PokemonTableContainer/>
 )
 
 export default PokemonTablePage;

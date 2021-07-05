@@ -23,23 +23,21 @@ const MenuProps = {
     },
 };
 
-export default function TypeSelect(props) {
+export default function TypeSelect({types, selectedTypes, onTypeSelect}) {
     const classes = selectStyle();
-
     const handleChange = (event) => {
-        props.onTypeSelect(event.target.value);
+        onTypeSelect(event.target.value);
     };
-
 
     return (
         <FormControl className={classes.formControl}>
             <InputLabel id="demo-multiple-chip-label">Choose pokemon Type</InputLabel>
-            {props.types.length ? (
+            {types.length ? (
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={props.selectedTypes}
+                    value={selectedTypes}
                     onChange={handleChange}
                     input={<Input id="select-multiple-chip"/>}
                     renderValue={(selected) => (
@@ -52,8 +50,8 @@ export default function TypeSelect(props) {
                     MenuProps={MenuProps}
                 >
                     {
-                        props.types.map((type) => (
-                            <MenuItem key={type} value={type} style={getStyles(type, props.selectedTypes, theme)}>
+                        types.map((type) => (
+                            <MenuItem key={type} value={type} style={getStyles(type, selectedTypes, theme)}>
                                 {type}
                             </MenuItem>
                         ))}
