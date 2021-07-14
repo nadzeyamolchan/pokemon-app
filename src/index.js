@@ -15,7 +15,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-axios.defaults.baseURL = 'https://pokeapi.co/api/v2'
+axios.defaults.baseURL = 'http://127.0.0.1:3000/'
 
 store.dispatch(fetchPokemon);
 store.dispatch(fetchPokemonTypes);

@@ -37,7 +37,7 @@ export default function PokemonModalWindow() {
     const {selectedPokemon: pokemonObject, showPokemonModalWindow: showModalWindow} = useSelector(state => state.selectedPokemon);
 
     const handleToggleModalWindow = () => {
-        dispatch({type: actionTypes.TOGGLE_MODAL_WINDOW})
+        dispatch({type: actionTypes.TOGGLE_POKEMON_MODAL_WINDOW})
     }
 
     return (

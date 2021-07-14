@@ -5,6 +5,7 @@ import pokemonTableStyles from "./PokemonTable.style";
 import { HEADER_CELLS } from "../../constants";
 import { actionTypes } from "../../redux/actionTypes";
 import PokemonTable from "./PokemonTable";
+import axios from "axios";
 
 export default function PokemonTableContainer() {
   const { pokemon, pokemonTypes } = useSelector((state) => state);
@@ -39,9 +40,11 @@ export default function PokemonTableContainer() {
     if (pokemon.length) {
       let filteredPokemon = pokemon;
       if (searchField) {
-        filteredPokemon = filteredPokemon.filter((pokemon) =>
-          pokemon.name.toLowerCase().includes(searchField.toLowerCase())
-        );
+         async function fetchSearchedPokemon(){
+          const searchedPokemon = await axios.get(`pokemon/search?name=${searchField.toString()}`);
+          setFilteredPokemon(searchedPokemon);
+        }
+        fetchSearchedPokemon();
       }
       if (selectedPokemonTypes && selectedPokemonTypes.length) {
         const isTypeSelected = (type) => selectedPokemonTypes.includes(type);
@@ -105,7 +108,7 @@ export default function PokemonTableContainer() {
           id: pokemon.id,
           sprite: pokemon.sprite,
           name: pokemon.name,
-          types: pokemon.types.map((pokemonType) => pokemonType.type.name),
+          types: pokemon.types.map((pokemonType) => pokemonType.name),
         };
       })}
       columns={columns}

@@ -16,8 +16,8 @@ export default function pokemonTypesReducer(state = initialState, action) {
 }
 
 export async function fetchPokemonTypes(dispatch) {
-    const response = await axios.get('/type');
-    const pokemonTypes = response.results.map(type => type.name);
+    const response = await axios.get('pokemon/type');
+    const pokemonTypes = response.map(type => type.name);
 
     dispatch({type: actionTypes.GET_POKEMON_TYPES, payload: pokemonTypes})
 }

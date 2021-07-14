@@ -14,7 +14,7 @@ export default function selectedPokemonReducer(state = initialState, action) {
                 showPokemonModalWindow: !state.showPokemonModalWindow
             }
         }
-        case actionTypes.TOGGLE_MODAL_WINDOW: {
+        case actionTypes.TOGGLE_POKEMON_MODAL_WINDOW: {
             return {
                 ...state,
                 showPokemonModalWindow: !state.showPokemonModalWindow
