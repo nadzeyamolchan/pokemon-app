@@ -1,4 +1,5 @@
 import {actionTypes} from "./actionTypes";
+import axios from "axios";
 
 const initialState = {
     selectedPokemon: {},
@@ -24,3 +25,25 @@ export default function selectedPokemonReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const fetchPokemonById = (id) => {
+  return (dispatch) => {
+    dispatch(fetchPokemonByIdRequest);
+    axios.get(`/${id}`).then((res) => {
+      dispatch(fetchPokemonByIdResolved(res));
+    });
+  };
+};
+
+const fetchPokemonByIdResolved = (pokemon) => {
+  return {
+    type: actionTypes.SELECT_POKEMON,
+    payload: pokemon,
+  };
+};
+
+const fetchPokemonByIdRequest = () => {
+  return {
+    type: actionTypes.MAKE_API_REQUEST,
+  };
+};

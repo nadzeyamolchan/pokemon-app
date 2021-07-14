@@ -6,7 +6,6 @@ import axios from "axios";
 
 import PokemonApp from './PokemonApp';
 import store from "./redux/store";
-import {fetchPokemon} from "./redux/pokemonSlice";
 import {fetchPokemonTypes} from "./redux/pokemonTypesSlice";
 
 axios.interceptors.response.use(function (response) {
@@ -15,18 +14,15 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-axios.defaults.baseURL = 'http://127.0.0.1:3000/'
+axios.defaults.baseURL = 'http://127.0.0.1:3000/pokemon'
 
-store.dispatch(fetchPokemon);
 store.dispatch(fetchPokemonTypes);
 
 ReactDOM.render(
-  <React.StrictMode>
       <Provider store={store}>
       <BrowserRouter>
     <PokemonApp />
       </BrowserRouter>
-      </Provider>
-  </React.StrictMode>,
+      </Provider>,
   document.getElementById('root')
 );

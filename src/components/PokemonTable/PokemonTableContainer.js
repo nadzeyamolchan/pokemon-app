@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import pokemonTableStyles from "./PokemonTable.style";
 import { HEADER_CELLS } from "../../constants";
-import { actionTypes } from "../../redux/actionTypes";
 import PokemonTable from "./PokemonTable";
-import axios from "axios";
+import store from "../../redux/store";
+import {fetchPokemon, fetchPokemonByFilter} from "../../redux/pokemonSlice";
+import {fetchPokemonById} from "../../redux/selectedPokemonSlice";
 
 export default function PokemonTableContainer() {
-  const { pokemon, pokemonTypes } = useSelector((state) => state);
-  const [filteredPokemon, setFilteredPokemon] = useState([]);
+  const { pokemonTypes, pokemon} = useSelector((state) => state);
   const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [pageSize, setPageSize] = useState(10);
 
   const classes = pokemonTableStyles();
-  const dispatch = useDispatch();
 
   const onPokemonTypeSelect = (types) => {
     setSelectedPokemonTypes(types);
@@ -29,32 +28,18 @@ export default function PokemonTableContainer() {
     setPageSize(params.pageSize);
   };
 
-  const handleRowClick = (param) => {
-    dispatch({
-      type: actionTypes.SELECT_POKEMON,
-      payload: pokemon.find((pokemon) => pokemon.id === param.row.id),
-    });
+  const handleRowClick = (param) =>  {
+    store.dispatch(fetchPokemonById(param.row.id));
   };
 
   useEffect(() => {
-    if (pokemon.length) {
-      let filteredPokemon = pokemon;
-      if (searchField) {
-         async function fetchSearchedPokemon(){
-          const searchedPokemon = await axios.get(`pokemon/search?name=${searchField.toString()}`);
-          setFilteredPokemon(searchedPokemon);
-        }
-        fetchSearchedPokemon();
-      }
-      if (selectedPokemonTypes && selectedPokemonTypes.length) {
-        const isTypeSelected = (type) => selectedPokemonTypes.includes(type);
-        filteredPokemon = filteredPokemon.filter((pokemon) =>
-          pokemon.types.map((type) => type.type.name).some(isTypeSelected)
-        );
-      }
-      setFilteredPokemon(filteredPokemon);
+    if (selectedPokemonTypes || searchField) {
+      store.dispatch(fetchPokemonByFilter(searchField, selectedPokemonTypes))
     }
-  }, [pokemon, searchField, selectedPokemonTypes]);
+    else {
+      store.dispatch(fetchPokemon);
+    }
+  }, [searchField, selectedPokemonTypes]);
 
   const columns = [
     {
@@ -103,7 +88,7 @@ export default function PokemonTableContainer() {
       onPokemonTypeSelect={onPokemonTypeSelect}
       handleSearchRequest={handleSearchRequest}
       handleRowClick={handleRowClick}
-      rows={filteredPokemon.map((pokemon) => {
+      rows={pokemon.map((pokemon) => {
         return {
           id: pokemon.id,
           sprite: pokemon.sprite,
