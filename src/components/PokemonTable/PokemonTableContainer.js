@@ -5,41 +5,61 @@ import pokemonTableStyles from "./PokemonTable.style";
 import { HEADER_CELLS } from "../../constants";
 import PokemonTable from "./PokemonTable";
 import store from "../../redux/store";
-import {fetchPokemon, fetchPokemonByFilter} from "../../redux/pokemonSlice";
+import {fetchPokemon} from "../../redux/pokemonSlice";
 import {fetchPokemonById} from "../../redux/selectedPokemonSlice";
 
 export default function PokemonTableContainer() {
-  const { pokemonTypes, pokemon} = useSelector((state) => state);
-  const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
-  const [searchField, setSearchField] = useState("");
-  const [pageSize, setPageSize] = useState(10);
+  const { pokemonTypes } = useSelector((state) => state);
+  const { pokemon, total } = useSelector((state) => state.pokemon);
+  const [data, setData] = useState({
+    selectedPokemonTypes: [],
+    searchField: '',
+    pageSize: 10,
+    currentPage: 0,
+    loading: false,
+  })
 
   const classes = pokemonTableStyles();
 
+  const updateData = (k, v) => setData((prev) => ({ ...prev, [k]: v }));
+
   const onPokemonTypeSelect = (types) => {
-    setSelectedPokemonTypes(types);
+    updateData("selectedPokemonTypes", types);
   };
 
   const handleSearchRequest = (event) => {
-    setSearchField(event.target.value);
+    updateData("searchField", event.target.value);
   };
 
   const handlePageSizeChange = (params) => {
-    setPageSize(params.pageSize);
+    updateData("pageSize", params.pageSize);
   };
+
+  const handlePageChange = (params) => {
+    updateData("currentPage", params.page);
+  }
 
   const handleRowClick = (param) =>  {
     store.dispatch(fetchPokemonById(param.row.id));
   };
 
   useEffect(() => {
-    if (selectedPokemonTypes || searchField) {
-      store.dispatch(fetchPokemonByFilter(searchField, selectedPokemonTypes))
-    }
-    else {
-      store.dispatch(fetchPokemon);
-    }
-  }, [searchField, selectedPokemonTypes]);
+    updateData("loading", true);
+
+    let active = true;
+
+    (async () => {
+      if (!active) {
+        return;
+      }
+      store.dispatch(fetchPokemon(data.searchField, data.selectedPokemonTypes, data.pageSize, data.currentPage))
+      updateData("loading", false);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [data.searchField, data.selectedPokemonTypes, data.pageSize, data.currentPage]);
 
   const columns = [
     {
@@ -84,11 +104,17 @@ export default function PokemonTableContainer() {
   return (
     <PokemonTable
       pokemonTypes={pokemonTypes}
-      selectedPokemonTypes={selectedPokemonTypes}
+      selectedPokemonTypes={data.selectedPokemonTypes}
       onPokemonTypeSelect={onPokemonTypeSelect}
       handleSearchRequest={handleSearchRequest}
       handleRowClick={handleRowClick}
-      rows={pokemon.map((pokemon) => {
+      page={data.currentPage}
+      paginationMode="server"
+      pagination
+      rowCount={total}
+      onPageChange={handlePageChange}
+      loading = {data.loading}
+      rows={pokemon.map((pokemon) => { //
         return {
           id: pokemon.id,
           sprite: pokemon.sprite,
@@ -96,8 +122,8 @@ export default function PokemonTableContainer() {
           types: pokemon.types.map((pokemonType) => pokemonType.name),
         };
       })}
-      columns={columns}
-      pageSize={pageSize}
+      columns={columns}//
+      pageSize={data.pageSize}//
       handlePageSizeChange={handlePageSizeChange}
     />
   );

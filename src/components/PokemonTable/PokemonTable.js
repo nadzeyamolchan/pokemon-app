@@ -22,6 +22,8 @@ PokemonTable.propTypes = {
   rows: PropTypes.array,
   columns: PropTypes.array,
   pageSize: PropTypes.number,
+  currentPage: PropTypes.number,
+  handlePageChange: PropTypes.func,
   handlePageSizeChange: PropTypes.func,
 };
 
@@ -47,15 +49,20 @@ export default function PokemonTable({ ...props }) {
           onRowClick={props.handleRowClick}
           rows={props.rows}
           columns={props.columns}
-          pageSize={props.pageSize}
-          onPageSizeChange={props.handlePageSizeChange}
-          rowsPerPageOptions={[5, 10, 20]}
+          loading={props.loading}
           pagination
+          pageSize={props.pageSize}
+          rowCount={props.rowCount}
+          paginationMode="server"
+          onPageSizeChange={props.handlePageSizeChange}
+          onPageChange={props.handlePageChange}
+          rowsPerPageOptions={[5, 10, 20]}
           autoHeight="true"
           components={{
             NoRowsOverlay: CustomNoRowsOverlayComponent,
           }}
           getRowClassName={() => classes.dataGridRows}
+          page={props.currentPage}
         />
       </div>
       <PokemonModalWindow />

@@ -1,48 +1,45 @@
 import axios from "axios";
 import {actionTypes} from "./actionTypes";
 
-const initialState = [];
+const initialState = {
+  pokemon: [],
+  total: 0,
+
+};
 
 export default function pokemonReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_ALL_POKEMON: {
-            return action.payload
-        }
-        case actionTypes.FILTER_POKEMON: {
-            return action.payload
+        case actionTypes.FETCH_POKEMON: {
+            return {
+              ...state,
+              pokemon: action.payload.pokemon,
+              total: action.payload.total
+            }
         }
         default:
             return state;
     }
 }
 
-export async function fetchPokemon(dispatch) {
-    const pokemonList = await axios.get('', {
-    })
-
-    const pokemonObjects = pokemonList.map(({id,
-        name,
-        weight,
-        height,types,sprite}) => ({id,
-        name,
-        weight,
-        height, types, sprite}));
-
-    dispatch({type: actionTypes.GET_ALL_POKEMON, payload: pokemonObjects})
-}
-
-export const fetchPokemonByFilter = (searchText, selectedTypes) => {
-    return (dispatch) => {
-        dispatch(fetchPokemonByQueriesRequest);
-        axios.get(`/search?name=${searchText}&types=${selectedTypes}`).then((res) => {
-            dispatch(fetchPokemonByQueriesResolved(res));
-        });
-    };
+export const fetchPokemon = (searchText, selectedTypes, limit, currentPage) => {
+  return (dispatch) => {
+    dispatch(fetchPokemonByQueriesRequest);
+    let offset = limit * (currentPage);
+    axios
+      .get(
+        `/search?name=${searchText}&types=${selectedTypes}&limit=${limit}&offset=${offset}`
+      )
+      .then((res) => {
+        dispatch(
+          fetchPokemonByQueriesResolved({ pokemon: res.data, total: res.total })
+        );
+      });
+  };
 };
 
 const fetchPokemonByQueriesResolved = (pokemonData) => {
     return {
-        type: actionTypes.FILTER_POKEMON,
+        type: actionTypes.FETCH_POKEMON,
         payload: pokemonData,
     };
 };

@@ -23,7 +23,7 @@ export default function Header() {
                 </div>
             </Link>
             <nav className={classes.navigationPanel}>
-                <Link className={classes.navigationLink} onClick={handleDownloadPokemonWindow}>
+                <Link className={classes.navigationLink} to='' onClick={handleDownloadPokemonWindow}>
                     Download collection
                 </Link>
                 <Link className={classes.navigationLink} to='/pokemon'>

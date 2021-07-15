@@ -9,7 +9,7 @@ import {
   DialogTitle,
   Input,
   FormHelperText,
-} from "@material-ui/core/Button";
+} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {actionTypes} from "../../redux/actionTypes";
 import {useStyles} from "./DownloadPokemonForm.style";
