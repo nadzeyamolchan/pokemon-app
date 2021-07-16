@@ -24,10 +24,30 @@ export default function pokemonReducer(state = initialState, action) {
 export const fetchPokemon = (searchText, selectedTypes, limit, currentPage) => {
   return (dispatch) => {
     dispatch(fetchPokemonByQueriesRequest);
-    let offset = limit * (currentPage);
+    let offset = limit * currentPage;
     axios
       .get(
-        `/search?name=${searchText}&types=${selectedTypes}&limit=${limit}&offset=${offset}`
+        `/search`,
+          {
+              params: {
+                  name: searchText,
+                  types: selectedTypes.join('&types='),
+                  limit: limit,
+                  offset: offset
+              },
+              paramsSerializer: params => {
+                  let result = '';
+                  for (const [key, value] of Object.entries(params)) {
+                      result = result && (value ? result + '&' : result + '')
+                      if(Array.isArray(value)) {
+                          result += value ? `${key}=${value.join(`&${key}=`)}` : '';
+                      } else {
+                          result += value ? `${key}=${value}` : ''
+                      }
+                  }
+                  return result;
+              }
+          }
       )
       .then((res) => {
         dispatch(

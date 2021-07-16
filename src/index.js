@@ -19,10 +19,10 @@ axios.defaults.baseURL = 'http://127.0.0.1:3000/pokemon'
 store.dispatch(fetchPokemonTypes);
 
 ReactDOM.render(
-      <Provider store={store}>
-      <BrowserRouter>
-    <PokemonApp />
-      </BrowserRouter>
-      </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <BrowserRouter>
+            <PokemonApp/>
+        </BrowserRouter>
+    </Provider>,
+    document.getElementById('root')
 );

@@ -54,8 +54,8 @@ export default function PokemonTable({ ...props }) {
           pageSize={props.pageSize}
           rowCount={props.rowCount}
           paginationMode="server"
-          onPageSizeChange={props.handlePageSizeChange}
-          onPageChange={props.handlePageChange}
+          onPageSizeChange={props.onPageSizeChange}
+          onPageChange={props.onPageChange}
           rowsPerPageOptions={[5, 10, 20]}
           autoHeight="true"
           components={{
