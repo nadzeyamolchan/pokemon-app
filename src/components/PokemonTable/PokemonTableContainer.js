@@ -32,12 +32,10 @@ export default function PokemonTableContainer() {
   };
 
   const handlePageSizeChange = (params) => {
-    console.log("page size changed")
     updateData("pageSize", params.pageSize);
   };
 
   const handlePageChange = (params) => {
-    console.log("page number changed")
     updateData("currentPage", params.page);
   }
 

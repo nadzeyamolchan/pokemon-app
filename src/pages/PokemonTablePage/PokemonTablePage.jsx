@@ -1,9 +1,13 @@
 import React from "react";
 
-import PokemonTableContainer from "../../components/PokemonTable/PokemonTableContainer";
+import PokemonTable from "../../components/PokemonTable/PokemonTableContainer";
 
-const PokemonTablePage = () => (
-    <PokemonTableContainer/>
-)
+const PokemonTablePage = () => {
+  return (
+    <React.Fragment>
+      <PokemonTable />
+    </React.Fragment>
+  );
+};
 
 export default PokemonTablePage;

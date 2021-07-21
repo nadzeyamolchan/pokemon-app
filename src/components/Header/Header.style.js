@@ -8,7 +8,7 @@ const headerStyle = makeStyles((theme) =>({
             justifyContent: "space-between",
             alignItems: "center",
 
-            margin: theme.spacing(0, 'auto', 10),
+            margin: theme.spacing(0, 'auto', 5),
             padding: theme.spacing(0, 5),
 
             backgroundColor: theme.palette.background.default
