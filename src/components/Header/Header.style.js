@@ -20,7 +20,7 @@ const headerStyle = makeStyles((theme) =>({
             color: theme.palette.grey,
             textDecoration: 'none',
             fontFamily: theme.typography.body1.fontFamily,
-            fontSize: theme.typography.h2.fontSize,
+            fontSize: theme.typography.h5.fontSize,
 
             '&:hover': {
                 transform: 'scale(1.02)'

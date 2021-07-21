@@ -1,9 +1,18 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import headerStyle from "./Header.style";
+import {useDispatch} from "react-redux";
+import {actionTypes} from "../../redux/actionTypes";
 
 export default function Header() {
     const classes = headerStyle();
+    const dispatch = useDispatch();
+
+    const handleDownloadPokemonWindow = () => {
+       dispatch({
+           type: actionTypes.TOGGLE_DOWNLOAD_POKEMON_MODAL_WINDOW
+       })
+    }
 
     return (
         <header className={classes.headerWrapper}>
@@ -14,8 +23,11 @@ export default function Header() {
                 </div>
             </Link>
             <nav className={classes.navigationPanel}>
+                <Link className={classes.navigationLink} to='' onClick={handleDownloadPokemonWindow}>
+                    Download collection
+                </Link>
                 <Link className={classes.navigationLink} to='/pokemon'>
-                    Pokemon collection
+                    To pokemon collection
                 </Link>
             </nav>
         </header>

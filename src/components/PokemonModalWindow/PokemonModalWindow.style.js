@@ -1,6 +1,6 @@
 import {makeStyles} from "@material-ui/core";
 
-export const styles = (theme) => ({
+export const useDialogTitleStyles = makeStyles((theme) => ({
     root: {
         margin: 0,
         padding: theme.spacing(2),
@@ -12,7 +12,7 @@ export const styles = (theme) => ({
         top: theme.spacing(1),
         color: theme.palette.grey[500],
     },
-});
+}));
 
 export const useDialogStyle = makeStyles(() => ({
     dialogContent: {
