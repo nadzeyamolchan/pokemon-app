@@ -19,37 +19,37 @@ export default function loginReducer(state = initialState, action) {
         signUp: !state.signUp,
       };
     }
-    /*case actionTypes.LOGIN_SUBMIT: {
+    case actionTypes.LOGIN_SIGN_UP: {
             return {
                 ...state,
-                data: payload.data
             }
-        }*/
+        }
     default:
       return state;
   }
 }
 
-export const sendCredentialsToGetData = (email, password) => {
+export const sendCredentialsToDataBase = (data) => {
   return (dispatch) => {
-    console.log("here!");
     axios
-      .post(`/auth/login`, {
-        
+      .post(`/users`, {
+        data: {
+          username: data.username,
+          password: data.password,
+          retypepassword: data.confirmPassword,
+          email: data.email,
+        }
       })
       .then((res) => {
-        console.log('And here!');
-        dispatch(sendCredentialsToGetDataResolved({ data: res }));
+        console.log(res);
+        dispatch(sendCredentialsToGetDataResolved({ token: res.token }));
       });
   };
 };
 
-const sendCredentialsToGetDataResolved = (data) => {
-  console.log('GET request!', data);
+const sendCredentialsToGetDataResolved = (token) => {
   return {
-    type: actionTypes.FETCH_POKEMON,
-    payload: data,
+    type: actionTypes.LOGIN_SIGN_UP,
+    payload: token,
   };
 };
-
-

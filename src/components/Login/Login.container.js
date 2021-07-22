@@ -13,16 +13,18 @@ import { useStyles } from "./Login.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../../redux/actionTypes";
 import store from "../../redux/store";
-import {sendCredentialsToGetData} from "../../redux/loginSlice";
+import {sendCredentialsToDataBase} from "../../redux/loginSlice";
 
 export default function LoginContainer() {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { signIn , /*email, password */} = useSelector((state) => state.login);
+  const { signIn } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
 
   const handleLoginForm = () => {
     dispatch({ type: actionTypes.TOGGLE_LOGIN_FORM });
@@ -36,12 +38,23 @@ export default function LoginContainer() {
     setPassword(event.target.value);
   }
 
+  const handleChangeConfirmPassword = (event) => {
+    setConfirmPassword(event.target.value);
+  }
+
+  const handleChangeUserName = (event) => {
+    setUserName(event.target.value);
+  }
+
   const handleSubmit = (event) => {
-    console.log("Email: ", email);
-    console.log("Password: ", password);
-    store.dispatch(sendCredentialsToGetData(email,password))
+    store.dispatch(sendCredentialsToDataBase(email,password, confirmPassword, userName))
     event.preventDefault();
   };
+
+  const handleSignInSubmit = (event) => {
+    console.log('Sign in!')
+    event.preventDefault();
+  }
 
   return (
     <React.Fragment>
@@ -53,32 +66,6 @@ export default function LoginContainer() {
           </Typography>
           <FormControl className={classes.form} onSubmit={handleSubmit}>
             <Grid container spacing={1} className={classes.grid}>
-              {signIn ? null : (
-                <React.Fragment>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoComplete="fname"
-                      name="firstName"
-                      variant="outlined"
-                      required
-                      size="medium"
-                      id="firstName"
-                      label="First Name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      variant="outlined"
-                      required
-                      size="medium"
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="lname"
-                    />
-                  </Grid>
-                </React.Fragment>
-              )}
               <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
@@ -86,14 +73,14 @@ export default function LoginContainer() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Username"
                   name="email"
                   autoComplete="email"
-                  value={email}
-                  onChange={handleChangeEmail}
+                  value={userName}
+                  onChange={handleChangeUserName}
                 />
               </Grid>
-              <Grid item xs={12} sm={12}>
+                <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
                   margin="normal"
@@ -121,8 +108,24 @@ export default function LoginContainer() {
                       type="password"
                       id="password"
                       autoComplete="confirm-password"
+                      value={confirmPassword}
+                      onChange={handleChangeConfirmPassword}
                     />
                   </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={email}
+                            onChange={handleChangeEmail}
+                        />
+                    </Grid>
                 </React.Fragment>
               )}
             </Grid>
@@ -131,7 +134,7 @@ export default function LoginContainer() {
               size="large"
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
+              onClick={signIn ? handleSignInSubmit : handleSubmit}
               className={classes.submit}
             >
               {signIn ? "Login" : "Sign up"}

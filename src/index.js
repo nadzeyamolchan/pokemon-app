@@ -14,7 +14,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-axios.defaults.baseURL = 'http://127.0.0.1:3000/pokemon'
+axios.defaults.baseURL = 'http://127.0.0.1:3001/pokemon'
 
 store.dispatch(fetchPokemonTypes);
 
