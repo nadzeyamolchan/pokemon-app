@@ -12,8 +12,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useStyles } from "./Login.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../../redux/actionTypes";
-import store from "../../redux/store";
-import {sendCredentialsToDataBase} from "../../redux/loginSlice";
+import axios from "axios";
+import * as bcrypt from "bcryptjs";
 
 export default function LoginContainer() {
   const classes = useStyles();
@@ -21,38 +21,66 @@ export default function LoginContainer() {
 
   const { signIn } = useSelector((state) => state.login);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [userName, setUserName] = useState('');
+
+  const [fieldData, setData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    userName: ''
+  });
+
+  const [token, setToken] = useState('');
 
   const handleLoginForm = () => {
     dispatch({ type: actionTypes.TOGGLE_LOGIN_FORM });
   };
 
   const handleChangeEmail = (event) => {
-    setEmail(event.target.value);
+    updateData('email', event.target.value);
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    updateData('password', event.target.value);
   }
 
   const handleChangeConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
+    updateData('confirmPassword', event.target.value);
   }
 
   const handleChangeUserName = (event) => {
-    setUserName(event.target.value);
+    updateData('userName', (event.target.value));
   }
 
-  const handleSubmit = (event) => {
-    store.dispatch(sendCredentialsToDataBase(email,password, confirmPassword, userName))
+  const updateData = (k, v) => setData((prev) => ({ ...prev, [k]: v }));
+
+  const clearTheForm = (fields) => {
+    Object.keys(fields).map(field => {
+      return updateData(field, '')
+    })
+  }
+
+  const handleSubmit = async (event) => {
+    await axios({ method: 'post',
+      url: '/users',
+      data: {
+        email: fieldData.email,
+        userName: fieldData.userName,
+        password: fieldData.password,
+        confirmPassword: fieldData.confirmPassword,
+      },
+      headers: {
+      'Content-Type': 'application/json',
+      }
+    }).then(res => {setToken(res.token)});
+    window.localStorage.setItem('access_token', token);
+    clearTheForm(fieldData);
     event.preventDefault();
   };
 
-  const handleSignInSubmit = (event) => {
-    console.log('Sign in!')
+  const handleSignInSubmit = async (event) => {
+    const hashedPassword = await bcrypt.hash(fieldData.password, 10).then(password => password);
+    console.log('Sign in!');
+
     event.preventDefault();
   }
 
@@ -64,7 +92,7 @@ export default function LoginContainer() {
           <Typography variant="h5" align="center">
             {signIn ? "Login" : "Sign up"}
           </Typography>
-          <FormControl className={classes.form} onSubmit={handleSubmit}>
+          <FormControl className={classes.form} onSubmit={signIn ? handleSignInSubmit : handleSubmit}>
             <Grid container spacing={1} className={classes.grid}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -76,7 +104,7 @@ export default function LoginContainer() {
                   label="Username"
                   name="email"
                   autoComplete="email"
-                  value={userName}
+                  value={fieldData.userName}
                   onChange={handleChangeUserName}
                 />
               </Grid>
@@ -91,7 +119,7 @@ export default function LoginContainer() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  value={password}
+                  value={fieldData.password}
                   onChange={handlePasswordChange}
                 />
               </Grid>
@@ -108,7 +136,7 @@ export default function LoginContainer() {
                       type="password"
                       id="password"
                       autoComplete="confirm-password"
-                      value={confirmPassword}
+                      value={fieldData.confirmPassword}
                       onChange={handleChangeConfirmPassword}
                     />
                   </Grid>
@@ -122,7 +150,7 @@ export default function LoginContainer() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            value={email}
+                            value={fieldData.email}
                             onChange={handleChangeEmail}
                         />
                     </Grid>

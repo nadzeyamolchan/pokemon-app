@@ -27,7 +27,7 @@ export const fetchPokemon = (searchText, selectedTypes, limit, currentPage) => {
     let offset = limit * currentPage;
     axios
       .get(
-        `/search`,
+        `/pokemon/search`,
           {
               params: {
                   name: searchText,
