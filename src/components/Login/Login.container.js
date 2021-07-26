@@ -9,11 +9,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import axios from "axios";
 import { useStyles } from "./Login.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../../redux/actionTypes";
-import axios from "axios";
-import * as bcrypt from "bcryptjs";
+
+//TODO create Login page
+//TODO add user greeting, logout button (redirect to '/login')
+
 
 export default function LoginContainer() {
   const classes = useStyles();
@@ -28,8 +31,6 @@ export default function LoginContainer() {
     confirmPassword: '',
     userName: ''
   });
-
-  const [token, setToken] = useState('');
 
   const handleLoginForm = () => {
     dispatch({ type: actionTypes.TOGGLE_LOGIN_FORM });
@@ -59,7 +60,7 @@ export default function LoginContainer() {
     })
   }
 
-  const handleSubmit = async (event) => {
+  const handleSingUpSubmit = async () => {
     await axios({ method: 'post',
       url: '/users',
       data: {
@@ -71,17 +72,23 @@ export default function LoginContainer() {
       headers: {
       'Content-Type': 'application/json',
       }
-    }).then(res => {setToken(res.token)});
-    window.localStorage.setItem('access_token', token);
+    }).then(res => localStorage.setItem('token', res.token));
     clearTheForm(fieldData);
-    event.preventDefault();
   };
 
-  const handleSignInSubmit = async (event) => {
-    const hashedPassword = await bcrypt.hash(fieldData.password, 10).then(password => password);
+  const handleSignInSubmit = async () => {
+    await axios({ method: 'post',
+      url: '/auth/login',
+      data: {
+        username: fieldData.userName,
+        password: fieldData.password,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => localStorage.setItem('token', res.token));
+    clearTheForm(fieldData);
     console.log('Sign in!');
-
-    event.preventDefault();
   }
 
   return (
@@ -92,7 +99,7 @@ export default function LoginContainer() {
           <Typography variant="h5" align="center">
             {signIn ? "Login" : "Sign up"}
           </Typography>
-          <FormControl className={classes.form} onSubmit={signIn ? handleSignInSubmit : handleSubmit}>
+          <FormControl className={classes.form} onSubmit={signIn ? handleSignInSubmit : handleSingUpSubmit}>
             <Grid container spacing={1} className={classes.grid}>
               <Grid item xs={12} sm={12}>
                 <TextField
@@ -100,9 +107,9 @@ export default function LoginContainer() {
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
+                  id="username"
                   label="Username"
-                  name="email"
+                  name="username"
                   autoComplete="email"
                   value={fieldData.userName}
                   onChange={handleChangeUserName}
@@ -131,7 +138,7 @@ export default function LoginContainer() {
                       margin="normal"
                       required
                       fullWidth
-                      name="password"
+                      name="confirm-password"
                       label="Confirm Password"
                       type="password"
                       id="password"
@@ -162,7 +169,7 @@ export default function LoginContainer() {
               size="large"
               variant="contained"
               color="primary"
-              onClick={signIn ? handleSignInSubmit : handleSubmit}
+              onClick={signIn ? handleSignInSubmit : handleSingUpSubmit}
               className={classes.submit}
             >
               {signIn ? "Login" : "Sign up"}
