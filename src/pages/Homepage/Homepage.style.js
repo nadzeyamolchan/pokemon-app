@@ -16,7 +16,11 @@ const homepageStyle = makeStyles( {
         backgroundSize: 'cover'
     },
     headerWrapper: {
-        width: '100%'
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     homePageHeader: {
         color: 'rgb(49,107,179)',
@@ -24,6 +28,9 @@ const homepageStyle = makeStyles( {
         '-webkit-text-stroke-width': '0.1rem',
         '-webkit-text-stroke-color': 'rgb(49,107,179)',
         textAlign: "center"
+    },
+    homePageButton: {
+        marginTop: '2rem'
     }
 });
 
