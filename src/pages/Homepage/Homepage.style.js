@@ -16,7 +16,7 @@ const homepageStyle = makeStyles( {
         backgroundSize: 'cover'
     },
     headerWrapper: {
-        width: '50%'
+        width: '100%'
     },
     homePageHeader: {
         color: 'rgb(49,107,179)',

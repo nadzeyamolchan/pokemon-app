@@ -2,10 +2,10 @@ import {makeStyles} from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
     root: {
-        position: 'absolute',
+        position: 'relative',
         margin: '0 0 0 auto',
-        width: '50%',
-        left: '50%',
+        width: '100%',
+        left: '0%',
         "& > *": {
             padding: theme.spacing(4),
         },
@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
         },
     },
     form: {
-        width: '50%',
+        width: '30%',
         "& > *": {
             margin: theme.spacing(1),
             alignSelf: "center",

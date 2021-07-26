@@ -9,9 +9,11 @@ import Footer from "./components/Footer/Footer.component";
 import PokemonTablePage from "./pages/PokemonTablePage/PokemonTablePage";
 import Homepage from "./pages/Homepage/Homepage";
 import React from "react";
+import LoginPage from "./pages/Login/Login";
+import {useSelector} from "react-redux";
 
-export const PokemonApp = (isAuthenticated) => {
-    /*isAuthenticated = false;*/
+export const PokemonApp = () => {
+    const isAuthenticated = useSelector(state => state.login.isAuthenticated);
     return (
       <ScopedCssBaseline>
         <ErrorBoundary>
@@ -21,12 +23,12 @@ export const PokemonApp = (isAuthenticated) => {
                   <Switch>
                       <Route exact path="/" component={Homepage} />
                       <Route exact path="/pokemon" component={PokemonTablePage} />
-                      <Redirect to="/" />
+                      <Redirect to="/login" />
                   </Switch>
               )  : (
                   <Switch>
-                      <Route exact path="/" component={Homepage} />
-                      <Redirect to="/" />
+                      <Route exact path="/login" component={LoginPage} />
+                      <Redirect to="/login" />
                   </Switch>
               ) }
             <Footer />

@@ -29,7 +29,7 @@ export default function selectedPokemonReducer(state = initialState, action) {
 export const fetchPokemonById = (id) => {
   return (dispatch) => {
     dispatch(fetchPokemonByIdRequest);
-    axios.get(`/${id}`).then((res) => {
+    axios.get(`pokemon/${id}`).then((res) => {
       dispatch(fetchPokemonByIdResolved(res));
     });
   };

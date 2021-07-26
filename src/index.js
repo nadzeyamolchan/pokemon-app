@@ -5,15 +5,19 @@ import {Provider} from "react-redux";
 import axios from "axios";
 
 import store from "./redux/store";
-import {fetchPokemonTypes} from "./redux/pokemonTypesSlice";
 import {PokemonApp} from "./PokemonApp";
+import {showAlertMessage} from "./redux/loginSlice";
 
 axios.interceptors.response.use(function (response) {
+    if(response.status === 201) {
+        window.location.href = '/';
+        console.log('Success!');
+    }
     return response.data;
 }, function (error) {
     if(error.response.status === 401){
-        //TODO redirect to login page, add pop-up with error message
         //TODO create separate file for axios settings
+        store.dispatch(showAlertMessage);
         console.log('401');
     }
     return Promise.reject(error);
@@ -31,8 +35,6 @@ axios.interceptors.request.use(function (config) {
 });
 
 axios.defaults.baseURL = 'http://localhost:3001/'
-
-store.dispatch(fetchPokemonTypes);
 
 ReactDOM.render(
     <Provider store={store}>

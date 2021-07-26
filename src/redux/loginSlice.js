@@ -2,11 +2,8 @@ import { actionTypes } from "./actionTypes";
 
 const initialState = {
   signIn: true,
-  signUp: false,
-  email: "",
-  password: "",
-  token: "",
-  data: [],
+  isAuthenticated: !!localStorage.getItem('token'),
+  isAlertWindowOpen: false
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -15,10 +12,28 @@ export default function loginReducer(state = initialState, action) {
       return {
         ...state,
         signIn: !state.signIn,
-        signUp: !state.signUp,
       };
     }
+
+    case actionTypes.LOG_OUT: {
+      return {
+        ...state,
+        isAuthenticated: !state.isAuthenticated,
+      }
+    }
+
+    case actionTypes.UNAUTHORIZED_ERROR: {
+      return {
+        ...state,
+        isAlertWindowOpen: !state.isAlertWindowOpen,
+      }
+    }
+
     default:
       return state;
   }
+}
+
+export async function showAlertMessage(dispatch) {
+  dispatch({type: actionTypes.UNAUTHORIZED_ERROR})
 }

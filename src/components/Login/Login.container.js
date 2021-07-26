@@ -14,10 +14,6 @@ import { useStyles } from "./Login.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypes } from "../../redux/actionTypes";
 
-//TODO create Login page
-//TODO add user greeting, logout button (redirect to '/login')
-
-
 export default function LoginContainer() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -86,15 +82,14 @@ export default function LoginContainer() {
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(res => localStorage.setItem('token', res.token));
+    }).then(res => localStorage.setItem('token', res.token))
     clearTheForm(fieldData);
-    console.log('Sign in!');
   }
 
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <Paper className={classes.elevation} elevation={4}>
+        <Paper className={classes.elevation} elevation={1}>
           <LockOutlinedIcon />
           <Typography variant="h5" align="center">
             {signIn ? "Login" : "Sign up"}
