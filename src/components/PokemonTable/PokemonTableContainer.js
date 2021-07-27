@@ -5,19 +5,19 @@ import pokemonTableStyles from "./PokemonTable.style";
 import { HEADER_CELLS } from "../../constants";
 import PokemonTable from "./PokemonTable";
 import store from "../../redux/store";
-import {fetchPokemon} from "../../redux/pokemonSlice";
-import {fetchPokemonById} from "../../redux/selectedPokemonSlice";
+import { fetchPokemon } from "../../redux/pokemonSlice";
+import { fetchPokemonById } from "../../redux/selectedPokemonSlice";
 
 export default function PokemonTableContainer() {
   const { pokemonTypes } = useSelector((state) => state);
   const { pokemon, total } = useSelector((state) => state.pokemon);
   const [data, setData] = useState({
     selectedPokemonTypes: [],
-    searchField: '',
+    searchField: "",
     pageSize: 10,
     currentPage: 0,
     loading: false,
-  })
+  });
 
   const classes = pokemonTableStyles();
 
@@ -37,9 +37,9 @@ export default function PokemonTableContainer() {
 
   const handlePageChange = (params) => {
     updateData("currentPage", params.page);
-  }
+  };
 
-  const handleRowClick = (param) =>  {
+  const handleRowClick = (param) => {
     store.dispatch(fetchPokemonById(param.row.id));
   };
 
@@ -52,14 +52,26 @@ export default function PokemonTableContainer() {
       if (!active) {
         return;
       }
-      store.dispatch(fetchPokemon(data.searchField, data.selectedPokemonTypes, data.pageSize, data.currentPage))
+      store.dispatch(
+        fetchPokemon(
+          data.searchField,
+          data.selectedPokemonTypes,
+          data.pageSize,
+          data.currentPage
+        )
+      );
       updateData("loading", false);
     })();
 
     return () => {
       active = false;
     };
-  }, [data.searchField, data.selectedPokemonTypes, data.pageSize, data.currentPage]);
+  }, [
+    data.searchField,
+    data.selectedPokemonTypes,
+    data.pageSize,
+    data.currentPage,
+  ]);
 
   const columns = [
     {
@@ -114,8 +126,9 @@ export default function PokemonTableContainer() {
       rowCount={total}
       onPageChange={handlePageChange}
       onPageSizeChange={handlePageSizeChange}
-      loading = {data.loading}
-      rows={pokemon.map((pokemon) => { //
+      loading={data.loading}
+      rows={pokemon.map((pokemon) => {
+        //
         return {
           id: pokemon.id,
           sprite: pokemon.sprite,
@@ -123,8 +136,8 @@ export default function PokemonTableContainer() {
           types: pokemon.types.map((pokemonType) => pokemonType.name),
         };
       })}
-      columns={columns}//
-      pageSize={data.pageSize}//
+      columns={columns}
+      pageSize={data.pageSize}
     />
   );
 }

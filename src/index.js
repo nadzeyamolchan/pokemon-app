@@ -1,46 +1,48 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 import axios from "axios";
 
 import store from "./redux/store";
-import {PokemonApp} from "./PokemonApp";
-import {showAlertMessage} from "./redux/loginSlice";
+import { PokemonApp } from "./PokemonApp";
 
-axios.interceptors.response.use(function (response) {
-    if(response.status === 201) {
-        window.location.href = '/';
-        console.log('Success!');
+axios.interceptors.response.use(
+  function (response) {
+    if (response.status === 201) {
+      window.location.href = "/";
     }
     return response.data;
-}, function (error) {
-    if(error.response.status === 401){
-        //TODO create separate file for axios settings
-        store.dispatch(showAlertMessage);
-        console.log('401');
+  },
+  function (error) {
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
-});
+  }
+);
 
-axios.interceptors.request.use(function (config) {
-    let token = localStorage.getItem('token');
-    if(token){
-        config.headers.Authorization = `Bearer ${token}`;
+axios.interceptors.request.use(
+  function (config) {
+    let token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-}, function (error) {
-
+  },
+  function (error) {
     return Promise.reject(error);
-});
+  }
+);
 
-axios.defaults.baseURL = 'http://localhost:3001/'
+axios.defaults.baseURL = "http://localhost:3001/";
 
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter >
-            <PokemonApp/>
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <BrowserRouter>
+      <PokemonApp />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
 );
