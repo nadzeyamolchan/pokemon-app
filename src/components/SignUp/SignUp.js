@@ -33,13 +33,12 @@ export const SignUpForm = () => {
       await axios({
         method: "post",
         url: "/users",
-        data: JSON.stringify(values, null, 2),
+        data: {...values},
         headers: {
           "Content-Type": "application/json",
         },
       })
         .then((res) => localStorage.setItem("token", res.token))
-        .catch((err) => console.log(err));
     },
   });
 

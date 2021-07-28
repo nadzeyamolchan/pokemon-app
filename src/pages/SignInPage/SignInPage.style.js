@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   root: () => ({
     height: "64vh",
     display: "flex",
@@ -10,8 +10,5 @@ export const useStyles = makeStyles((theme) => ({
   }),
   link: () => ({
     textDecoration: "none",
-    "& :visited": {
-      color: theme.palette.primary,
-    },
   }),
 }));

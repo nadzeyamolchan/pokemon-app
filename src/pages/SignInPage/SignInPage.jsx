@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container } from "@material-ui/core";
+import {Container, Typography} from "@material-ui/core";
 import { SignInForm } from "../../components/SignIn/SignIn";
 import { useStyles } from "./SignInPage.style";
 
@@ -10,9 +10,12 @@ const SignInPage = () => {
     <React.Fragment>
       <Container maxWidth="md" className={classes.root}>
         <SignInForm />
-        <Link to="/login/signup" className={classes.link}>
-          Don't have an account? Sign up!
-        </Link>
+          <Typography>
+              Don't have an account?
+              <Link to="/signup" className={classes.link}>
+                  Sign up
+              </Link>
+          </Typography>
       </Container>
     </React.Fragment>
   );

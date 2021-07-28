@@ -23,9 +23,10 @@ const homepageStyle = makeStyles({
         justifyContent: "center",
     },
     homePageHeader: {
+        marginBottom: '3rem',
         color: "rgb(49,107,179)",
         "-webkit-text-fill-color": "rgb(255,203,5)",
-        "-webkit-text-stroke-width": "0.1rem",
+        "-webkit-text-stroke-width": "0.09rem",
         "-webkit-text-stroke-color": "rgb(49,107,179)",
         textAlign: "center",
     },

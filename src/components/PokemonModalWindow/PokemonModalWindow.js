@@ -70,11 +70,14 @@ export default function PokemonModalWindow() {
           {`# ${pokemonObject.id} ${pokemonObject.name}`}
         </DialogTitle>
         <DialogContent dividers className={classes.dialogContent}>
-          <img
-            className={classes.pokemonSprite}
-            src={pokemonObject.sprite}
-            alt="pokemon-sprite"
-          />
+          <div className={classes.pokemonSprite}>
+            <img
+                className={classes.pokemonSpriteImage}
+                src={pokemonObject.sprite}
+                alt="pokemon-sprite"
+
+            />
+          </div>
           <DialogContent dividers className={classes.dialogContentDescription}>
             <Typography gutterBottom>
               {`Height: ${pokemonObject.height}`}

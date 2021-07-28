@@ -1,10 +1,10 @@
 import React from "react";
-import { useFormik } from "formik";
+import {useFormik} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Button, TextField, Typography } from "@material-ui/core";
+import {Button, TextField, Typography} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useStyles } from "./SignIn.styles";
+import {useStyles} from "./SignIn.styles";
 
 export const SignInForm = () => {
   const classes = useStyles();
@@ -26,11 +26,13 @@ export const SignInForm = () => {
       await axios({
         method: "post",
         url: "/auth/login",
-        data: JSON.stringify(values, null, 2),
+        data: {...values},
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => localStorage.setItem("token", res.token));
+      }).then((res) => {
+        localStorage.setItem("token", res.token)}
+      );
     },
   });
 

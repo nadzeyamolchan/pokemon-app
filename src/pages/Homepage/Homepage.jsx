@@ -1,30 +1,20 @@
 import React from "react";
-import { Button, Typography } from "@material-ui/core";
-import axios from "axios";
+import {Typography} from "@material-ui/core";
 
 import homepageStyle from "./Homepage.style";
+import {useSelector} from "react-redux";
+import HomePageCard from "../../components/HomepageCard/HomePageCard";
 
 const Homepage = () => {
   const classes = homepageStyle();
-  const fetchPokemonData = async () => {
-    await axios.get("/sync").then((res) => res);
-  };
+  const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
   return (
     <div className={classes.homePageWrapper}>
       <div className={classes.headerWrapper}>
         <Typography className={classes.homePageHeader} variant="h3">
           Welcome to the Pokemon app!
         </Typography>
-        <Typography variant="body2" color="textPrimary">
-          To start the application upload the pokemon data
-        </Typography>
-        <Button
-          variant="outlined"
-          className={classes.homePageButton}
-          onClick={fetchPokemonData}
-        >
-          Download pokemon
-        </Button>
+        <HomePageCard isUserAuthorized={isAuthenticated}/>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         '& > *': {
-            marginBottom: theme.spacing(1)
+            marginBottom: theme.spacing(2)
         },
     }),
 }));

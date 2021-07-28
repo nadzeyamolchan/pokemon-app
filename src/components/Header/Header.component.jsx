@@ -27,13 +27,13 @@ export default function Header() {
             </Link>
 
             {isAuthenticated ? (
-                <nav className={classes.navigationPanel}>
+                <nav>
                     <Link className={classes.navigationLink} to="/pokemon">
                         Pokemon collection
                     </Link>
                     <Link
                         className={classes.navigationLink}
-                        to="/login"
+                        to="/signin"
                         onClick={handleLogOut}
                     >
                         Log out

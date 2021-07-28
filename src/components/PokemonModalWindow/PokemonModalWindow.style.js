@@ -24,5 +24,9 @@ export const useDialogStyle = makeStyles(() => ({
     },
     pokemonSprite: {
         width: '50%'
-    }
+    },
+    pokemonSpriteImage: {
+        width: '100%'
+    },
+
 }))
