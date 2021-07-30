@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-const searchBoxStyle = makeStyles(() => ({
+const searchBoxStyle = makeStyles((theme) => ({
   searchBoxWrapper: {
     width: "50%",
     display: "flex",
@@ -11,6 +11,7 @@ const searchBoxStyle = makeStyles(() => ({
 
   searchInput: {
     width: "60%",
+    padding: theme.spacing(1),
   },
 
   searchIcon: {

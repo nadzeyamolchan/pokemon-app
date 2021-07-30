@@ -9,3 +9,7 @@ export const debounce = (func, delay) => {
         }, delay);
     };
 };
+
+export const isLogin = () => {
+    return !!localStorage.getItem('token');
+}

@@ -1,9 +1,16 @@
 import React from "react";
 
-import PokemonTableContainer from "../../components/PokemonTable/PokemonTableContainer";
+import PokemonTable from "../../components/PokemonTable/PokemonTableContainer";
+import store from "../../redux/store";
+import {fetchPokemonTypes} from "../../redux/pokemonSlice";
 
-const PokemonTablePage = () => (
-    <PokemonTableContainer/>
-)
+const PokemonTablePage = () => {
+    store.dispatch(fetchPokemonTypes);
+  return (
+    <React.Fragment>
+      <PokemonTable />
+    </React.Fragment>
+  );
+};
 
 export default PokemonTablePage;

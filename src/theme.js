@@ -12,7 +12,7 @@ export const theme = createMuiTheme({
             main: '#ab6a84'
         },
         background: {
-            default: '#dcd7c9'
+            default: '#efece6'
         }
     },
     typography : {

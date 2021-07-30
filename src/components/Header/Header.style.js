@@ -1,48 +1,47 @@
 import { makeStyles } from "@material-ui/core";
 
-const headerStyle = makeStyles((theme) =>({
-        headerWrapper: () => ({
-            height: theme.spacing(20),
+const headerStyle = makeStyles((theme) => ({
+  headerWrapper: () => ({
+    height: theme.spacing(20),
 
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
 
-            margin: theme.spacing(0, 'auto', 10),
-            padding: theme.spacing(0, 5),
+    margin: theme.spacing(0, "auto", 5),
+    padding: theme.spacing(0, 5),
 
-            backgroundColor: theme.palette.background.default
-        }),
+    backgroundColor: theme.palette.background.default,
+  }),
 
-        navigationLink: () => ({
-            padding: '1rem',
+  navigationLink: () => ({
+    padding: "1rem",
 
-            color: theme.palette.grey,
-            textDecoration: 'none',
-            fontFamily: theme.typography.body1.fontFamily,
-            fontSize: theme.typography.h5.fontSize,
+    color: theme.palette.grey,
+    textDecoration: "none",
+    fontFamily: theme.typography.body1.fontFamily,
+    fontSize: theme.typography.h5.fontSize,
 
-            '&:hover': {
-                transform: 'scale(1.02)'
-            },
+    "&:hover": {
+      transform: "scale(1.02)",
+    },
 
-            '&:active': {
-                color: theme.palette.primary.main
-            },
+    "&:active": {
+      color: theme.palette.primary.main,
+    },
 
-            '&:visited': {
-                color: theme.palette.secondary.main
-            },
+    "&:visited": {
+      color: theme.palette.secondary.main,
+    },
 
-            '&:first-child': {
-                padding: '1rem 1rem 1rem 0'
-            },
+    "&:first-child": {
+      padding: "1rem 1rem 1rem 0",
+    },
 
-            '&:last-child': {
-                padding: '1rem 0 1rem 1rem'
-            }
-        })
-    })
-)
+    "&:last-child": {
+      padding: "1rem 0 1rem 1rem",
+    },
+  }),
+}));
 
 export default headerStyle;

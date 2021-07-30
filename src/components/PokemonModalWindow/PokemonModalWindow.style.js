@@ -4,10 +4,10 @@ export const useDialogTitleStyles = makeStyles((theme) => ({
     root: {
         margin: 0,
         padding: theme.spacing(2),
-        textAlign: 'center'
+        textAlign: "center",
     },
     closeButton: {
-        position: 'absolute',
+        position: "absolute",
         right: theme.spacing(1),
         top: theme.spacing(1),
         color: theme.palette.grey[500],
@@ -22,7 +22,11 @@ export const useDialogStyle = makeStyles(() => ({
         display: "flex",
         flexDirection: "column"
     },
-    pokemonSprite : {
+    pokemonSprite: {
         width: '50%'
-    }
+    },
+    pokemonSpriteImage: {
+        width: '100%'
+    },
+
 }))
