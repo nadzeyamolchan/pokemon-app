@@ -2,7 +2,7 @@ import React from "react";
 
 import PokemonTable from "../../components/PokemonTable/PokemonTableContainer";
 import store from "../../redux/store";
-import {fetchPokemonTypes} from "../../redux/pokemonTypesSlice";
+import {fetchPokemonTypes} from "../../redux/pokemonSlice";
 
 const PokemonTablePage = () => {
     store.dispatch(fetchPokemonTypes);

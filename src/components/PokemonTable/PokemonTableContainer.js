@@ -6,11 +6,10 @@ import { HEADER_CELLS } from "../../constants";
 import PokemonTable from "./PokemonTable";
 import store from "../../redux/store";
 import { fetchPokemon } from "../../redux/pokemonSlice";
-import { fetchPokemonById } from "../../redux/selectedPokemonSlice";
+import {fetchPokemonById} from "../../redux/pokemonSlice";
 
 export default function PokemonTableContainer() {
-  const { pokemonTypes } = useSelector((state) => state);
-  const { pokemon, total } = useSelector((state) => state.pokemon);
+  const { pokemon, total, pokemonTypes } = useSelector((state) => state.pokemon);
 
   const [selectedPokemonTypes, setSelectedPokemonTypes] = useState([]);
   const [searchField, setSearchField] = useState("");
