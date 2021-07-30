@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from 'axios';
 
 import pokemonTableStyles from "./PokemonTable.style";
 import { HEADER_CELLS } from "../../constants";
@@ -16,12 +17,30 @@ export default function PokemonTableContainer() {
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [selectionModel, setSelectionModel] = React.useState([]);
 
   const classes = pokemonTableStyles();
 
   const onPokemonTypeSelect = (types) => {
     setSelectedPokemonTypes(types);
   };
+
+  const onPokemonDelete = async (selectedPokemon) => {
+    for (let i = 0; i < selectedPokemon.length; i++) {
+      await axios({
+        method: 'delete',
+        url: `/pokemon/${selectedPokemon[i]}`
+      });
+    }
+    store.dispatch(
+        fetchPokemon(
+            searchField,
+            selectedPokemonTypes,
+            pageSize,
+            currentPage
+        )
+    );
+  }
 
   const handleSearchRequest = (event) => {
     setSearchField(event.target.value);
@@ -133,6 +152,13 @@ export default function PokemonTableContainer() {
       })}
       columns={columns}
       pageSize={pageSize}
+      checkboxSelection
+      onSelectionModelChange={(selection) => {
+        const newSelectionModel = selection.selectionModel;
+          setSelectionModel(newSelectionModel);
+      }}
+      selectionModel={selectionModel}
+      onPokemonDelete={onPokemonDelete}
     />
   );
 }

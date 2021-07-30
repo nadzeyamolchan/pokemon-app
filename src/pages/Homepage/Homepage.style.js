@@ -15,12 +15,16 @@ const homepageStyle = makeStyles({
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
     },
-    headerWrapper: {
+    main: {
         width: "100%",
+        padding: '2rem',
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        '&>*': {
+            marginBottom: '1.5rem'
+        }
     },
     homePageHeader: {
         marginBottom: '3rem',

@@ -16,6 +16,20 @@ const pokemonTableStyles = makeStyles((theme) => ({
   dataGridRows: {
     cursor: "pointer",
   },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '1.5rem',
+    '&>*': {
+      marginRight: '1.5rem'
+    },
+  },
+  createButton: {
+    color: '#e5b441'
+  },
+  removeButton: {
+    color: 'rgb(232,83,130)'
+  }
 }));
 
 export default pokemonTableStyles;

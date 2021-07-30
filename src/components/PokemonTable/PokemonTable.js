@@ -1,6 +1,6 @@
 import React from "react";
 import { DataGrid } from "@material-ui/data-grid";
-import Container from "@material-ui/core/Container";
+import { Container, Icon } from "@material-ui/core";
 
 import pokemonTableStyles from "./PokemonTable.style";
 import TypeSelect from "../Select/Select.component";
@@ -9,6 +9,7 @@ import { debounce } from "../../utils";
 import { CustomNoRowsOverlayComponent } from "../CustomNoRowsOverlay/CustomNoRowsOverlay.component";
 import PokemonModalWindow from "../PokemonModalWindow/PokemonModalWindow";
 import * as PropTypes from "prop-types";
+import {Button} from "@material-ui/core";
 
 PokemonTable.propTypes = {
   pokemonTypes: PropTypes.oneOfType([
@@ -43,6 +44,11 @@ export default function PokemonTable({ ...props }) {
           handleChange={debounce(props.handleSearchRequest, 500)}
         />
       </Container>
+      <Container className={classes.buttonContainer}>
+        <Button variant="outlined" className={classes.removeButton}
+                onClick={() => props.onPokemonDelete(props.selectionModel)}><Icon>remove_circle</Icon>Delete pokemon</Button>
+        <Button variant="outlined" className={classes.createButton}><Icon>add_circle</Icon>Create pokemon</Button>
+      </Container>
       <div className={classes.dataGridContainer}>
         <DataGrid
           className={classes.dataGrid}
@@ -63,6 +69,8 @@ export default function PokemonTable({ ...props }) {
           }}
           getRowClassName={() => classes.dataGridRows}
           page={props.currentPage}
+          checkboxSelection
+          onSelectionModelChange={props.onSelectionModelChange}
         />
       </div>
       <PokemonModalWindow />

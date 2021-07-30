@@ -25,7 +25,7 @@ export const SignInForm = () => {
     onSubmit: async (values) => {
       await axios({
         method: "post",
-        url: "/auth/login",
+        url: "/auth",
         data: {...values},
         headers: {
           "Content-Type": "application/json",
